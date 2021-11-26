@@ -1,58 +1,75 @@
 server:
   port: 8080
 
-#swagger3 Éú²ú»·¾³ÏÂture
+#swagger3 ç”Ÿäº§ç¯å¢ƒä¸‹ture
 springfox:
   documentation:
     swagger-ui:
       enabled: true
 
 spring:
-  # Êı¾İÔ´ÅäÖÃ
+  # æ•°æ®æºé…ç½®
   datasource:
-    type: com.alibaba.druid.pool.DruidDataSource¡¡¡¡ # MYSQL 5 Çı¶¯£ºcom.mysql.jdbc.Driver£¬MYSQL 6+ Çı¶¯£ºcom.mysql.cj.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSourceã€€ã€€ # MYSQL 5 é©±åŠ¨ï¼šcom.mysql.jdbc.Driverï¼ŒMYSQL 6+ é©±åŠ¨ï¼šcom.mysql.cj.jdbc.Driver
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://127.0.0.1:3306/test?autoReconnect=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=CONVERT_TO_NULL&useSSL=false&serverTimezone=GMT%2B8
     username: root
     password: 123456
-    # Á¬½Ó³ØÅäÖÃ
+    # è¿æ¥æ± é…ç½®
     druid:
-      # ³õÊ¼»¯´óĞ¡£¬×îĞ¡£¬×î´ó
+      # åˆå§‹åŒ–å¤§å°ï¼Œæœ€å°ï¼Œæœ€å¤§
       initial-size: 5
       min-idle: 5
       max-active: 20
-      # ÅäÖÃ»ñÈ¡Á¬½ÓµÈ´ı³¬Ê±µÄÊ±¼ä
+      # é…ç½®è·å–è¿æ¥ç­‰å¾…è¶…æ—¶çš„æ—¶é—´
       max-wait: 60000
-      # ÅäÖÃ¼ä¸ô¶à¾Ã²Å½øĞĞÒ»´Î¼ì²â£¬¼ì²âĞèÒª¹Ø±ÕµÄ¿ÕÏĞÁ¬½Ó£¬µ¥Î»ºÁÃë
+      # é…ç½®é—´éš”å¤šä¹…æ‰è¿›è¡Œä¸€æ¬¡æ£€æµ‹ï¼Œæ£€æµ‹éœ€è¦å…³é—­çš„ç©ºé—²è¿æ¥ï¼Œå•ä½æ¯«ç§’
       time-between-eviction-runs-millis: 60000
-      # ÅäÖÃÒ»¸öÁ¬½ÓÔÚ³ØÖĞ×îĞ¡Éú´æÊ±¼ä
+      # é…ç½®ä¸€ä¸ªè¿æ¥åœ¨æ± ä¸­æœ€å°ç”Ÿå­˜æ—¶é—´
       min-evictable-idle-time-millis: 300000
       validation-query: SELECT 1 FROM sys_user
       test-while-idle: true
       test-on-borrow: false
       test-on-return: false
-      # ´ò¿ª PSCache£¬²¢ÇÒÖ¸¶¨Ã¿¸öÁ¬½ÓÉÏ PSCache µÄ´óĞ¡
+      # æ‰“å¼€ PSCacheï¼Œå¹¶ä¸”æŒ‡å®šæ¯ä¸ªè¿æ¥ä¸Š PSCache çš„å¤§å°
       pool-prepared-statements: true
       max-pool-prepared-statement-per-connection-size: 20
-      # ÅäÖÃ¼à¿ØÍ³¼ÆÀ¹½ØµÄ Filter£¬È¥µôºó¼à¿Ø½çÃæ SQL ÎŞ·¨Í³¼Æ£¬wall ÓÃÓÚ·À»ğÇ½
+      # é…ç½®ç›‘æ§ç»Ÿè®¡æ‹¦æˆªçš„ Filterï¼Œå»æ‰åç›‘æ§ç•Œé¢ SQL æ— æ³•ç»Ÿè®¡ï¼Œwall ç”¨äºé˜²ç«å¢™
       filters: stat,wall,log4j
-      # Í¨¹ı connection-properties ÊôĞÔ´ò¿ª mergeSql ¹¦ÄÜ£»Âı SQL ¼ÇÂ¼
+      # é€šè¿‡ connection-properties å±æ€§æ‰“å¼€ mergeSql åŠŸèƒ½ï¼›æ…¢ SQL è®°å½•
       connection-properties: druid.stat.mergeSql\=true;druid.stat.slowSqlMillis\=5000
-      # ÅäÖÃ DruidStatFilter
+      # é…ç½® DruidStatFilter
       web-stat-filter:
         enabled: true
         url-pattern: /*
         exclusions: .js,*.gif,*.jpg,*.bmp,*.png,*.css,*.ico,/druid/*
-      # ÅäÖÃ DruidStatViewServlet
+      # é…ç½® DruidStatViewServlet
       stat-view-servlet:
         url-pattern: /druid/*
-        # IP °×Ãûµ¥£¬Ã»ÓĞÅäÖÃ»òÕßÎª¿Õ£¬ÔòÔÊĞíËùÓĞ·ÃÎÊ
+        # IP ç™½åå•ï¼Œæ²¡æœ‰é…ç½®æˆ–è€…ä¸ºç©ºï¼Œåˆ™å…è®¸æ‰€æœ‰è®¿é—®
         allow: 127.0.0.1
-        # IP ºÚÃûµ¥£¬Èô°×Ãûµ¥Ò²´æÔÚ£¬ÔòÓÅÏÈÊ¹ÓÃ
+        # IP é»‘åå•ï¼Œè‹¥ç™½åå•ä¹Ÿå­˜åœ¨ï¼Œåˆ™ä¼˜å…ˆä½¿ç”¨
         deny: 192.168.31.253
-        # ½ûÓÃ HTML ÖĞ Reset All °´Å¥
+        # ç¦ç”¨ HTML ä¸­ Reset All æŒ‰é’®
         reset-enable: false
-        # µÇÂ¼ÓÃ»§Ãû/ÃÜÂë
+        # ç™»å½•ç”¨æˆ·å/å¯†ç 
         login-username: root
         login-password: 123
+
+  #redisé…ç½®
+  redis:
+    database: 0
+    host: 127.0.0.1
+    port: 6379
+    password:
+
+  #mybatisPlusé…ç½®
+mybatis-plus:
+  mapper-locations: classpath:mapper/*.xml            # é…ç½®mapper.xmlè·¯å¾„
+  check-config-location: true                         # æ£€æŸ¥xmlæ–‡ä»¶æ˜¯å¦å­˜åœ¨
+  configuration:
+    map-underscore-to-camel-case: true                # å¼€å¯é©¼å³°å‘½åæ³•
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  type-aliases-package: com.torch.supermusic.entity    # å®ä½“ç±»å­˜æ”¾ä½ç½®
+
 

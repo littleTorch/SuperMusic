@@ -29,11 +29,11 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.mybatis.spring.boot</groupId>
-            <artifactId>mybatis-spring-boot-starter</artifactId>
-            <version>2.2.0</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.mybatis.spring.boot</groupId>-->
+<!--            <artifactId>mybatis-spring-boot-starter</artifactId>-->
+<!--            <version>2.2.0</version>-->
+<!--        </dependency>-->
 
         <dependency>
             <groupId>mysql</groupId>
@@ -66,6 +66,23 @@
             <groupId>io.springfox</groupId>
             <artifactId>springfox-boot-starter</artifactId>
             <version>3.0.0</version>
+        </dependency>
+        <!--MybatisPlus-->
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-boot-starter</artifactId>
+            <version>3.4.3.4</version>
+        </dependency>
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus</artifactId>
+            <version>3.4.3.4</version>
+        </dependency>
+        <!--mybatisplus代码生成器-->
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-generator</artifactId>
+            <version>3.5.1</version>
         </dependency>
     </dependencies>
 
