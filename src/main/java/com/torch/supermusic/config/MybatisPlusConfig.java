@@ -7,6 +7,8 @@ import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+
+//分页插件
 @Configuration
 @MapperScan("com.baomidou.cloud.service.*.mapper*")
 public class MybatisPlusConfig {
