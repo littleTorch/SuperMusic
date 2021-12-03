@@ -28,7 +28,7 @@ public class Singer implements Serializable {
 
     @ApiModelProperty("序号")
     @TableId(value = "id", type = IdType.AUTO)
-    private Integer id;
+    private String id;
 
     @ApiModelProperty("歌手名字")
     @TableField("singer_name")

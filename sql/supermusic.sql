@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50727
 File Encoding         : 65001
 
-Date: 2021-12-03 22:12:28
+Date: 2021-12-03 23:51:52
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -45,7 +45,7 @@ CREATE TABLE `permission` (
 -- ----------------------------
 DROP TABLE IF EXISTS `playlist`;
 CREATE TABLE `playlist` (
-  `id` int(10) NOT NULL AUTO_INCREMENT COMMENT '歌单序号',
+  `id` varchar(255) NOT NULL COMMENT '歌单序号',
   `playlist_name` varchar(50) DEFAULT NULL COMMENT '歌单名字',
   `playlist_tag` varchar(20) DEFAULT NULL COMMENT '歌单类型',
   `playlist_create` varchar(20) DEFAULT NULL COMMENT '创建者',
@@ -53,13 +53,11 @@ CREATE TABLE `playlist` (
   `playlist_type` int(10) DEFAULT NULL COMMENT '歌单类型（0普通歌单，1排行榜，2我的歌单）',
   `icon` varchar(255) DEFAULT NULL COMMENT '歌单图片',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of playlist
 -- ----------------------------
-INSERT INTO `playlist` VALUES ('1', '我的歌单', '快乐', 'user', '喜欢的歌曲', null, null);
-INSERT INTO `playlist` VALUES ('2', '周杰伦的歌单', '轻快', 'root', '还行', null, null);
 
 -- ----------------------------
 -- Table structure for `playlist_song`
@@ -67,8 +65,8 @@ INSERT INTO `playlist` VALUES ('2', '周杰伦的歌单', '轻快', 'root', '还
 DROP TABLE IF EXISTS `playlist_song`;
 CREATE TABLE `playlist_song` (
   `id` int(10) NOT NULL AUTO_INCREMENT COMMENT '序号',
-  `song_id` int(10) DEFAULT NULL COMMENT '歌曲序号',
-  `playlist_id` int(10) DEFAULT NULL COMMENT '歌单序号',
+  `song_id` varchar(255) DEFAULT NULL COMMENT '歌曲序号',
+  `playlist_id` varchar(255) DEFAULT NULL COMMENT '歌单序号',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -111,7 +109,7 @@ CREATE TABLE `role_permission` (
 -- ----------------------------
 DROP TABLE IF EXISTS `singer`;
 CREATE TABLE `singer` (
-  `id` int(10) NOT NULL AUTO_INCREMENT COMMENT '序号',
+  `id` varchar(255) NOT NULL COMMENT '序号',
   `singer_name` varchar(20) DEFAULT NULL COMMENT '歌手名字',
   `nationality` varchar(20) DEFAULT NULL COMMENT '国籍',
   `birth_address` varchar(100) DEFAULT NULL COMMENT '出生地址',
@@ -130,9 +128,9 @@ CREATE TABLE `singer` (
 -- ----------------------------
 DROP TABLE IF EXISTS `song`;
 CREATE TABLE `song` (
-  `id` int(10) NOT NULL AUTO_INCREMENT COMMENT '歌曲id',
+  `id` varchar(255) NOT NULL COMMENT '歌曲id',
   `name` varchar(10) DEFAULT NULL COMMENT '歌曲名字',
-  `singer_id` int(50) DEFAULT NULL COMMENT '歌手id',
+  `singer_id` varchar(255) DEFAULT NULL COMMENT '歌手id',
   `song_url` varchar(100) DEFAULT NULL COMMENT '歌曲文件地址',
   `picture_url` varchar(100) DEFAULT NULL COMMENT '歌曲封面地址',
   `playlist_name` varchar(50) DEFAULT NULL COMMENT '歌单名字',

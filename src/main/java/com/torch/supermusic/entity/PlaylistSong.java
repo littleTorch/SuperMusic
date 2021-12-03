@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import io.swagger.models.auth.In;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -32,11 +33,11 @@ public class PlaylistSong implements Serializable {
 
     @ApiModelProperty("歌曲序号")
     @TableField("song_id")
-    private Integer songId;
+    private String songId;
 
     @ApiModelProperty("歌单序号")
     @TableField("playlist_id")
-    private Integer playlistId;
+    private String playlistId;
 
 
 }

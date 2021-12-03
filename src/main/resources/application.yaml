@@ -68,7 +68,13 @@ spring:
     pathmatch:
       matching-strategy: ant_path_matcher
 
+
   #mybatisPlus配置
+  security:
+    user:
+      name: 123
+      password: 123
+
 mybatis-plus:
   mapper-locations: classpath:mapper/*.xml            # 配置mapper.xml路径
   check-config-location: true                         # 检查xml文件是否存在
@@ -78,5 +84,6 @@ mybatis-plus:
   type-aliases-package: com.torch.supermusic.entity    # 实体类存放位置
   global-config:
     refresh-mapper: true
+
 
 

@@ -28,7 +28,7 @@ public class Song implements Serializable {
 
     @ApiModelProperty("歌曲id")
     @TableId(value = "id", type = IdType.AUTO)
-    private Integer id;
+    private String id;
 
     @ApiModelProperty("歌曲名字")
     @TableField("name")
@@ -36,7 +36,7 @@ public class Song implements Serializable {
 
     @ApiModelProperty("歌手id")
     @TableField("singer_id")
-    private Integer singerId;
+    private String singerId;
 
     @ApiModelProperty("歌曲文件地址")
     @TableField("song_url")
