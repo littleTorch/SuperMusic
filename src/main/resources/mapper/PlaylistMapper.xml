@@ -10,11 +10,12 @@
         <result column="playlist_create" property="playlistCreate" />
         <result column="playlist_comment" property="playlistComment" />
         <result column="playlist_type" property="playlistType" />
+        <result column="icon" property="icon" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, playlist_name, playlist_tag, playlist_create, playlist_comment, playlist_type
+        id, playlist_name, playlist_tag, playlist_create, playlist_comment, playlist_type, icon
     </sql>
 
 </mapper>

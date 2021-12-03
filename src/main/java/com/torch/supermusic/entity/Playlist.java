@@ -50,5 +50,9 @@ public class Playlist implements Serializable {
     @TableField("playlist_type")
     private Integer playlistType;
 
+    @ApiModelProperty("歌单图片")
+    @TableField("icon")
+    private String icon;
+
 
 }

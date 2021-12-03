@@ -50,5 +50,9 @@ public class Singer implements Serializable {
     @TableField("profile")
     private String profile;
 
+    @ApiModelProperty("歌手照片")
+    @TableField("icon")
+    private String icon;
+
 
 }

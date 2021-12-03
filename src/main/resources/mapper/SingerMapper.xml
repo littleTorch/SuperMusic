@@ -10,11 +10,12 @@
         <result column="birth_address" property="birthAddress" />
         <result column="sex" property="sex" />
         <result column="profile" property="profile" />
+        <result column="icon" property="icon" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, singer_name, nationality, birth_address, sex, profile
+        id, singer_name, nationality, birth_address, sex, profile, icon
     </sql>
 
 </mapper>

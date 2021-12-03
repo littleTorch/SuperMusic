@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.torch.supermusic.climbing.josnpojo.MusicList;
 import com.torch.supermusic.climbing.josnpojo.MusicUrl;
 import com.torch.supermusic.climbing.josnpojo.PlayList;
+
 import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.Request;
 import us.codecraft.webmagic.Site;
@@ -20,6 +21,8 @@ public class GetMusic implements PageProcessor {
 
     static String URL="http://localhost:3000/";
 
+//    @Autowired
+//    private IPlaylistService playlistService;
 
     // 部分一：抓取网站的相关配置，包括编码、抓取间隔、重试次数等
     private Site site = Site.me().setRetryTimes(3).setSleepTime(3000).setTimeOut(10000);
@@ -41,7 +44,8 @@ public class GetMusic implements PageProcessor {
             page.addTargetRequest(URL+"playlist/track/all?id="+parse.getId());
 //            playList.add(parse);
 //            将歌单写入数据库
-            System.out.println(parse);
+
+//            System.out.println(parse);
             break;
         }
         }

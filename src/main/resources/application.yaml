@@ -76,5 +76,7 @@ mybatis-plus:
     map-underscore-to-camel-case: true                # 开启驼峰命名法
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   type-aliases-package: com.torch.supermusic.entity    # 实体类存放位置
+  global-config:
+    refresh-mapper: true
 
 
