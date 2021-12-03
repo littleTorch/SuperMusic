@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.generator.FastAutoGenerator;
 import com.baomidou.mybatisplus.generator.config.OutputFile;
 import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
 import java.util.ArrayList;
@@ -38,7 +39,7 @@ public class MybatisPlusAutoGenerator {
                 })
                 .packageConfig(builder -> {
                     builder.parent("com.torch.supermusic") // 设置父包名
-                            .pathInfo(Collections.singletonMap(OutputFile.mapperXml, "D:\\ideawork\\project\\supermusic\\src\\main\\resources")); // 设置mapperXml生成路径
+                            .pathInfo(Collections.singletonMap(OutputFile.mapperXml, "D:\\ideawork\\project\\supermusic\\src\\main\\resources\\mapper")); // 设置mapperXml生成路径
                 })
                 .strategyConfig(builder -> {
                     builder.addInclude(tables)// 设置需要生成的表名

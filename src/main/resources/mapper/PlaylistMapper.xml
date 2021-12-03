@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.torch.supermusic.mapper.PlaylistMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.torch.supermusic.entity.Playlist">
+        <id column="id" property="id" />
+        <result column="playlist_name" property="playlistName" />
+        <result column="playlist_tag" property="playlistTag" />
+        <result column="playlist_create" property="playlistCreate" />
+        <result column="playlist_comment" property="playlistComment" />
+        <result column="playlist_type" property="playlistType" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, playlist_name, playlist_tag, playlist_create, playlist_comment, playlist_type
+    </sql>
+
+</mapper>

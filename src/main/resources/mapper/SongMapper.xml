@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.torch.supermusic.mapper.SongMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.torch.supermusic.entity.Song">
+        <id column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="singer_id" property="singerId" />
+        <result column="song_url" property="songUrl" />
+        <result column="picture_url" property="pictureUrl" />
+        <result column="playlist_name" property="playlistName" />
+        <result column="comment" property="comment" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, name, singer_id, song_url, picture_url, playlist_name, comment
+    </sql>
+
+</mapper>

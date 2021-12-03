@@ -2,15 +2,15 @@ server:
   port: 8080
 
 #swagger3 生产环境下ture
-springfox:
-  documentation:
-    swagger-ui:
-      enabled: true
+#springfox:
+#  documentation:
+#    swagger-ui:
+#      enabled: true
 
 spring:
   # 数据源配置
   datasource:
-    type: com.alibaba.druid.pool.DruidDataSource　　 # MYSQL 5 驱动：com.mysql.jdbc.Driver，MYSQL 6+ 驱动：com.mysql.cj.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://127.0.0.1:3306/supermusic?autoReconnect=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=CONVERT_TO_NULL&useSSL=false&serverTimezone=GMT%2B8
     username: root
@@ -27,7 +27,7 @@ spring:
       time-between-eviction-runs-millis: 60000
       # 配置一个连接在池中最小生存时间
       min-evictable-idle-time-millis: 300000
-      validation-query: SELECT 1 FROM sys_user
+      validation-query: SELECT 1 FROM user
       test-while-idle: true
       test-on-borrow: false
       test-on-return: false
@@ -63,6 +63,11 @@ spring:
     port: 6379
     password:
 
+ #swagger3导致启动失败问题（原因是在springboot2.6.0中将SpringMVC 默认路径匹配策略从AntPathMatcher 更改为PathPatternParser，导致出错，解决办法是切换会原先的AntPathMatcher）
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
   #mybatisPlus配置
 mybatis-plus:
   mapper-locations: classpath:mapper/*.xml            # 配置mapper.xml路径
@@ -72,6 +77,4 @@ mybatis-plus:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   type-aliases-package: com.torch.supermusic.entity    # 实体类存放位置
 
-logging:
-  level: warn
 
