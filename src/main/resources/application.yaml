@@ -72,4 +72,6 @@ mybatis-plus:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   type-aliases-package: com.torch.supermusic.entity    # 实体类存放位置
 
+logging:
+  level: warn
 

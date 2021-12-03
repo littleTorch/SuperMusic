@@ -84,6 +84,17 @@
             <artifactId>mybatis-plus-generator</artifactId>
             <version>3.5.1</version>
         </dependency>
+        <!--爬虫框架webmagic-->
+        <dependency>
+            <groupId>us.codecraft</groupId>
+            <artifactId>webmagic-core</artifactId>
+            <version>0.7.5</version>
+        </dependency>
+        <dependency>
+            <groupId>us.codecraft</groupId>
+            <artifactId>webmagic-extension</artifactId>
+            <version>0.7.5</version>
+        </dependency>
     </dependencies>
 
     <build>
