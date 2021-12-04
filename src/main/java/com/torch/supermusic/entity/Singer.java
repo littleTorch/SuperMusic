@@ -34,18 +34,6 @@ public class Singer implements Serializable {
     @TableField("singer_name")
     private String singerName;
 
-    @ApiModelProperty("国籍")
-    @TableField("nationality")
-    private String nationality;
-
-    @ApiModelProperty("出生地址")
-    @TableField("birth_address")
-    private String birthAddress;
-
-    @ApiModelProperty("性别（0：男，1：女）")
-    @TableField("sex")
-    private Integer sex;
-
     @ApiModelProperty("简介")
     @TableField("profile")
     private String profile;

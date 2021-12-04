@@ -9,14 +9,16 @@ import java.util.List;
 @Data
 public class MusicList {
         private String name;
-        private int id;
+        private String id;
+//        歌手
         private List<ArBean> ar;
+//        歌曲封面
         private AlBean al;
 
         @NoArgsConstructor
         @Data
         public static class AlBean {
-            private int id;
+            private String id;
             private String name;
             private String picUrl;
         }
@@ -24,7 +26,7 @@ public class MusicList {
         @NoArgsConstructor
         @Data
         public static class ArBean {
-            private int id;
+            private String id;
             private String name;
         }
 

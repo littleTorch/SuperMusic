@@ -46,10 +46,6 @@ public class Song implements Serializable {
     @TableField("picture_url")
     private String pictureUrl;
 
-    @ApiModelProperty("歌单名字")
-    @TableField("playlist_name")
-    private String playlistName;
-
     @ApiModelProperty("备注")
     @TableField("comment")
     private String comment;
