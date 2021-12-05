@@ -1,5 +1,6 @@
 package com.torch.supermusic.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.torch.supermusic.climbing.GetMusic;
 import com.torch.supermusic.service.IPlaylistService;
 import com.torch.supermusic.service.IPlaylistSongService;
@@ -31,6 +32,7 @@ public class GetMusicController {
 
     @GetMapping("/getmusic")
     public void getmusic(){
+        delAllAboutMusicTabel();
         Request request = new Request("http://localhost:3000/login/cellphone");
         request.setMethod(HttpConstant.Method.POST);
         Map<String, Object> map = new HashMap<>();
@@ -45,5 +47,13 @@ public class GetMusicController {
                 .thread(8)
                 //启动爬虫
                 .run();
+    }
+
+
+    public void delAllAboutMusicTabel(){
+        playlistService.remove(new QueryWrapper<>());
+        playlistSongService.remove(new QueryWrapper<>());
+        songService.remove(new QueryWrapper<>());
+        singerService.remove(new QueryWrapper<>());
     }
 }
