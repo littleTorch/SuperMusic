@@ -1,6 +1,5 @@
-package com.torch.supermusic.climbing.josnpojo;
+package com.torch.supermusic.util.climbing.josnpojo;
 
-import com.alibaba.fastjson.annotation.JSONField;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

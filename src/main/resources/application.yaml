@@ -86,4 +86,7 @@ mybatis-plus:
     refresh-mapper: true
 
 
-
+jwt:
+  secret: supermusic.com
+#  5天
+  expiration: 432000000

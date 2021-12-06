@@ -1,13 +1,13 @@
-package com.torch.supermusic.climbing;
+package com.torch.supermusic.util.climbing;
 
 import cn.hutool.core.util.ReUtil;
 import cn.hutool.json.JSONUtil;
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.torch.supermusic.climbing.josnpojo.Artist;
-import com.torch.supermusic.climbing.josnpojo.MusicList;
-import com.torch.supermusic.climbing.josnpojo.MusicUrl;
-import com.torch.supermusic.climbing.josnpojo.PlayList;
+import com.torch.supermusic.util.climbing.josnpojo.Artist;
+import com.torch.supermusic.util.climbing.josnpojo.MusicList;
+import com.torch.supermusic.util.climbing.josnpojo.MusicUrl;
+import com.torch.supermusic.util.climbing.josnpojo.PlayList;
 
 import com.torch.supermusic.entity.Playlist;
 

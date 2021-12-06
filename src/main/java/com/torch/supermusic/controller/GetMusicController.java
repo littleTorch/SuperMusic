@@ -1,7 +1,7 @@
 package com.torch.supermusic.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.torch.supermusic.climbing.GetMusic;
+import com.torch.supermusic.util.climbing.GetMusic;
 import com.torch.supermusic.service.IPlaylistService;
 import com.torch.supermusic.service.IPlaylistSongService;
 import com.torch.supermusic.service.ISingerService;

@@ -1,9 +1,7 @@
-package com.torch.supermusic.climbing.josnpojo;
+package com.torch.supermusic.util.climbing.josnpojo;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.List;
 
 @NoArgsConstructor
 @Data

@@ -5,10 +5,17 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 /**
  * <p>
@@ -22,7 +29,7 @@ import lombok.Setter;
 @Setter
 @TableName("user")
 @ApiModel(value = "User对象", description = "")
-public class User implements Serializable {
+public class User implements Serializable , UserDetails {
 
     private static final long serialVersionUID = 1L;
 
@@ -63,4 +70,39 @@ public class User implements Serializable {
     private String email;
 
 
+    //用户角色列表,不属于用户表字段，需要排除
+    @ApiModelProperty(value = "用户角色列表")
+    @TableField(exist = false)
+    private List<Role> roles;
+
+    //由于authorities不是数据库里面的字段，所以要排除他，不然mybatis-plus找不到该字段会报错
+    @ApiModelProperty(value = "权限")
+    @TableField(exist = false)
+    Collection<? extends GrantedAuthority> authorities;
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return authorities;
+    }
+
+    //账户没有过期
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+    //账户没有锁定
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+    //密码没有过期
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+    //账户是否可用
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 }
