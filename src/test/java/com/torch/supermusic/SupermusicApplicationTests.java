@@ -18,8 +18,8 @@ class SupermusicApplicationTests {
     @Test
     void contextLoads() {
         User user = new User();
-        user.setId(1);
-        user.setUsername("root");
+        user.setId(2);
+        user.setUsername("admin");
         user.setPassword(new BCryptPasswordEncoder().encode("123"));
         userService.save(user);
     }

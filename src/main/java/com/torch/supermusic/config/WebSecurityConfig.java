@@ -65,14 +65,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 ).permitAll()//资源监测类接口放行
                 .and()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.GET,"/login", "/login/image", "/my/icon","/foodDate/pic", "/swagger-ui/**","/getmusic").permitAll()//登录,注册等无需身份的接口放行，其他接口全部接受验证
+                .antMatchers("/login", "/login/image", "/my/icon","/foodDate/pic", "/swagger-ui/**","/getmusic").permitAll()//登录,注册等无需身份的接口放行，其他接口全部接受验证
                 //跨域请求会先进行一次OPTIONS请求
                 .antMatchers(HttpMethod.OPTIONS).permitAll()
 //                开发时先全部放行
-                .antMatchers(HttpMethod.POST).permitAll()
-                .antMatchers(HttpMethod.PUT).permitAll()
-                .antMatchers(HttpMethod.DELETE).permitAll()
-                .antMatchers(HttpMethod.GET).permitAll();
+                .antMatchers(HttpMethod.POST).authenticated()
+                .antMatchers(HttpMethod.PUT).authenticated()
+                .antMatchers(HttpMethod.DELETE).authenticated()
+                .antMatchers(HttpMethod.GET).authenticated();
+//                .anyRequest().authenticated();
 
         httpSecurity
                 .addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);

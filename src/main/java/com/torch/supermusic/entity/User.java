@@ -11,6 +11,7 @@ import java.util.List;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
@@ -25,8 +26,7 @@ import org.springframework.security.core.userdetails.UserDetails;
  * @author Torch
  * @since 2021-12-03
  */
-@Getter
-@Setter
+@Data
 @TableName("user")
 @ApiModel(value = "User对象", description = "")
 public class User implements Serializable , UserDetails {

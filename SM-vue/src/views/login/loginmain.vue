@@ -13,8 +13,7 @@
       class="login_form" 
       ref="form" 
       :rules="rules"
-      :model="form" 
- 
+      :model="form"
       >
         <!-- name -->
         <el-form-item label="用户名" prop="username" label-width="65px">
@@ -67,21 +66,14 @@ components: {
   },
 methods:{
   onSubmit(){
-   
-    // this.$api.getlogin2({
-    //   username:this.form.username,
-    //   password:this.form.password
-
-    // }).then(() =>{
-    // //   console.log(res.data);
-    //    console.log(this.form);
-    // })
-  this.$router.push('/about');
+    this.axios.post("login",JSON.stringify(this.form)).then((response) => {
+      let res=response.data
+      console.log(res.data)
+      sessionStorage.setItem("token",res.data);
+    })
+  // this.$router.push('/about');
   },
-
-  
 }
-
 }
 </script>
 <style>

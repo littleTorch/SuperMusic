@@ -4,7 +4,7 @@
 <div id="box">
 
     <div class="row1">
-      <router-link exact to="/mainL/login" >登录</router-link>
+    <router-link exact to="/mainL/login" >登录</router-link>
     <router-link to="/mainL/register">注册</router-link>
     </div>
     <div class="row2">
