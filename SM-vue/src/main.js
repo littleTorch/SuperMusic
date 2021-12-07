@@ -4,13 +4,13 @@ import router from './router'
 import store from './store'
 import './plugins/element.js'
 import './assets/commond.css'
-
+import infiniteScroll from "vue-infinite-scroll";
 import SlideVerify from 'vue-monoplasty-slide-verify';
-
-// import api from "./api"
-
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+// import api from "./api"
+// 引入axios
+
 
 Vue.use(VueAxios, axios)
 
@@ -18,6 +18,9 @@ Vue.use(VueAxios, axios)
 Vue.use(SlideVerify);
 axios.defaults.baseURL = "/api"
 Vue.config.productionTip = false
+
+
+Vue.use(infiniteScroll);
 
 axios.interceptors.request.use(config => {
   let token = sessionStorage.getItem("token");

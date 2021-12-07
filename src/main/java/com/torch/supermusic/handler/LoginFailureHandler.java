@@ -14,33 +14,47 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@Component
+/**
+ * 登录认证失败处理器
+ */
+@Component("loginFailureHandler")
 public class LoginFailureHandler implements AuthenticationFailureHandler {
+
+
     @Override
-    public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
-        response.setContentType("application/json;charset=UTF-8");
-        ServletOutputStream out = response.getOutputStream();
+    public void onAuthenticationFailure(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
+                                        AuthenticationException e) throws IOException, ServletException {
+        httpServletResponse.setContentType("application/json;charset=UTF-8");
+        ServletOutputStream out = httpServletResponse.getOutputStream();
         String str = null;
         int code = 500;
-        if (exception instanceof AccountExpiredException) {
+        if (e instanceof AccountExpiredException) {
             //账号过期
             str = "账户过期，登录失败!";
-        } else if (exception instanceof BadCredentialsException) {
+        } else if (e instanceof BadCredentialsException) {
             //密码错误
             str = "用户名或密码输入错误，登录失败!";
-        } else if (exception instanceof CredentialsExpiredException) {
+        } else if (e instanceof CredentialsExpiredException) {
             //密码过期
             str = "密码过期，登录失败!";
-        } else if (exception instanceof DisabledException) {
+        } else if (e instanceof DisabledException) {
             //账号不可用
             str = "账户被禁用，登录失败!";
-        } else if (exception instanceof LockedException) {
+        } else if (e instanceof LockedException) {
             //账号锁定
             str = "账户被锁定，登录失败!";
-        } else if (exception instanceof InternalAuthenticationServiceException) {
+        } else if (e instanceof InternalAuthenticationServiceException) {
             //用户不存在
             str = "用户不存在，登录失败!";
-        }else{
+        }/*else if(e instanceof ImageCodeException){
+            //验证码异常
+            code = 800;
+            str = e.getMessage();
+        }*/ else if(e instanceof TokenException){
+            //token异常
+            code = 600;
+            str = e.getMessage();
+        } else{
             //其他错误
             str = "登录失败!";
         }
@@ -49,5 +63,4 @@ public class LoginFailureHandler implements AuthenticationFailureHandler {
         out.flush();
         out.close();
     }
-
 }
