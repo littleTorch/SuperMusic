@@ -46,9 +46,8 @@ public class GetMusic implements PageProcessor {
     // process是定制爬虫逻辑的核心接口，在这里编写抽取逻辑
     public void process(Page page) {
         StringBuilder musicids=null;
-        System.out.println("进入**************************************");
         String thisUrl=page.getRequest().getUrl();
-        String thisId = ReUtil.get("id=.+", thisUrl, 0);
+        String thisId = ReUtil.get("\\d{1,15}$", thisUrl, 0);
         System.out.println(thisUrl);
 //        获取排行榜列表
         if (thisUrl.contains("toplist")){
@@ -78,7 +77,7 @@ public class GetMusic implements PageProcessor {
                 musicids.append(","+musicList.getId());
                 //歌单歌曲表
                 PlaylistSong playlistSong = new PlaylistSong();
-                playlistSong.setPlaylistId(thisId);
+                playlistSong.setPlaylistId(Long.parseLong(thisId));
                 playlistSong.setSongId(musicList.getId());
                 playlistSongService.save(playlistSong);
                 //歌曲表

@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class Artist {
-    private String id;
+    private Long id;
     private String cover;
     private String name;
     private String briefDesc;

@@ -17,6 +17,6 @@ public class PlayList implements Serializable {
 
     private String name;
 
-    private String id;
+    private Long id;
 
 }

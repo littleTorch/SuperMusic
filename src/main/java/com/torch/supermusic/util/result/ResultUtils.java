@@ -30,10 +30,6 @@ public class ResultUtils {
         return Vo(msg, CodeStatus.SUCCESS_CODE, data);
     }
 
-    //带分页返回
-    public static ResultPageVo success(String msg, Integer pageNum, Integer pageSize, Integer total, Object data) {
-        return new ResultPageVo(msg, CodeStatus.SUCCESS_CODE, pageNum, pageSize, total, data);
-    }
 
     //返回失败
     //无参数返回值

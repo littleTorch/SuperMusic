@@ -7,10 +7,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 /**
  * <p>
@@ -20,8 +17,7 @@ import lombok.Setter;
  * @author Torch
  * @since 2021-12-03
  */
-@Getter
-@Setter
+@Data
 @TableName("playlist")
 @ApiModel(value = "Playlist对象", description = "")
 public class Playlist implements Serializable {
@@ -30,7 +26,7 @@ public class Playlist implements Serializable {
 
     @ApiModelProperty("歌单序号")
     @TableId(value = "id", type = IdType.AUTO)
-    private String id;
+    private Long id;
 
     @ApiModelProperty("歌单名字")
     @TableField("playlist_name")

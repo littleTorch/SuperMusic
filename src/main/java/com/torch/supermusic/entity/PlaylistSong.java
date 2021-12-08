@@ -8,6 +8,7 @@ import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.models.auth.In;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,8 +20,7 @@ import lombok.Setter;
  * @author Torch
  * @since 2021-12-03
  */
-@Getter
-@Setter
+@Data
 @TableName("playlist_song")
 @ApiModel(value = "PlaylistSong对象", description = "")
 public class PlaylistSong implements Serializable {
@@ -33,11 +33,11 @@ public class PlaylistSong implements Serializable {
 
     @ApiModelProperty("歌曲序号")
     @TableField("song_id")
-    private String songId;
+    private Long songId;
 
     @ApiModelProperty("歌单序号")
     @TableField("playlist_id")
-    private String playlistId;
+    private Long playlistId;
 
 
 }

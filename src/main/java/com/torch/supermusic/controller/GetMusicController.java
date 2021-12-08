@@ -44,7 +44,7 @@ public class GetMusicController {
                 .addUrl("http://localhost:3000/toplist")
                 .addPipeline(new ConsolePipeline())
                 //开启5个线程抓取
-                .thread(8)
+                .thread(10)
                 //启动爬虫
                 .run();
     }

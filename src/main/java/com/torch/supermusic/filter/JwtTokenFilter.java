@@ -1,7 +1,6 @@
 package com.torch.supermusic.filter;
 
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
-import com.torch.supermusic.entity.User;
 import com.torch.supermusic.handler.LoginFailureHandler;
 import com.torch.supermusic.handler.TokenException;
 import com.torch.supermusic.service.impl.UserServiceImpl;
@@ -83,7 +82,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
         String token = request.getHeader("token");
         //解析token，获取用户名
         String username = jwtTokenUtil.getUsernameFromToken(token);
-
+//      登录请求跳过token认证
         if (request.getRequestURI().startsWith("/login")){
             return;
         }

@@ -41,18 +41,31 @@ const routes = [
   }, {
     path: '/Admin',
     name: 'Admin',
-    redirect: '/Admin/first',
+    redirect: '/Admin/IndexSet',
 
-    component: () => import('../views/other/Administrator.vue'),
+    // component: () => import('../views/other/Administrator.vue'),
+    component: () => import('../views/other/AdminPage.vue'),
     children: [
       {
-        path: 'first',
-        name: 'first',
-        component: () => import('../components/admin/first.vue')
+        path: 'IndexSet',
+        name: 'IndexSet',
+        component: () => import('../views/admin/IndexSet.vue')
       }, {
-        path: 'singer',
-        name: 'singer',
-        component: () => import('../components/admin/singerA.vue')
+        path: 'SongSet',
+        name: 'SongSet',
+        component: () => import('../views/admin/SongSet.vue')
+      },{
+        path: 'SingSet',
+        name: 'SingSet',
+        component: () => import('../views/admin/SingSet.vue')
+      },{
+        path: 'PlaylistSet',
+        name: 'PlaylistSet',
+        component: () => import('../views/admin/PlaylistSet.vue')
+      },{
+        path: 'UserSet',
+        name: 'UserSet',
+        component: () => import('../views/admin/UserSet.vue')
       }
 
     ]

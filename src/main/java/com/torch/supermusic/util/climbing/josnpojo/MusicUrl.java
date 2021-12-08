@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 public class MusicUrl {
 
-        private String id;
+        private Long id;
         private String url;
 
 }

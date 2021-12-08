@@ -7,7 +7,9 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
@@ -18,8 +20,8 @@ import lombok.Setter;
  * @author Torch
  * @since 2021-12-03
  */
-@Getter
-@Setter
+@Data
+@NoArgsConstructor
 @TableName("song")
 @ApiModel(value = "Song对象", description = "")
 public class Song implements Serializable {
@@ -28,7 +30,7 @@ public class Song implements Serializable {
 
     @ApiModelProperty("歌曲id")
     @TableId(value = "id", type = IdType.AUTO)
-    private String id;
+    private Long id;
 
     @ApiModelProperty("歌曲名字")
     @TableField("name")
@@ -36,7 +38,7 @@ public class Song implements Serializable {
 
     @ApiModelProperty("歌手id")
     @TableField("singer_id")
-    private String singerId;
+    private Long singerId;
 
     @ApiModelProperty("歌曲文件地址")
     @TableField("song_url")
