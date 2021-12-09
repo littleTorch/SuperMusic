@@ -2,6 +2,7 @@ package com.torch.supermusic.service;
 
 import com.torch.supermusic.entity.User;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.torch.supermusic.util.argEntity.Register;
 
 /**
  * <p>
@@ -13,4 +14,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IUserService extends IService<User> {
 
+    String sendmail(String mail);
+
+    String register(Register register);
 }

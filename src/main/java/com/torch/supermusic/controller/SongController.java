@@ -3,7 +3,7 @@ package com.torch.supermusic.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.torch.supermusic.entity.SelectAndPage;
+import com.torch.supermusic.util.argEntity.SelectAndPage;
 import com.torch.supermusic.entity.Song;
 import com.torch.supermusic.service.ISongService;
 import com.torch.supermusic.util.result.ResultUtils;

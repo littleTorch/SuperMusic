@@ -8,6 +8,8 @@ import com.torch.supermusic.handler.LoginSuccessHandler;
 import com.torch.supermusic.service.IUserService;
 import com.torch.supermusic.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.boot.web.servlet.RegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -100,7 +102,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/**/*.xlsx",
                         "/swagger-resources/**").permitAll()//资源监测类接口放行
 //                .and().authorizeRequests()
-                .antMatchers( "/swagger-ui/**","/getmusic").permitAll()//登录,注册等无需身份的接口放行，其他接口全部接受验证
+                .antMatchers( "/swagger-ui/**","/getmusic","/user/getcode","/user/register").permitAll()//登录,注册等无需身份的接口放行，其他接口全部接受验证
                 //跨域请求会先进行一次OPTIONS请求
                 .antMatchers(HttpMethod.POST,"/login").permitAll()
                 .antMatchers(HttpMethod.OPTIONS).permitAll()
@@ -114,5 +116,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         httpSecurity.headers().cacheControl();
     }
+
+
+
 
 }

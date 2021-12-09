@@ -1,9 +1,12 @@
 package com.torch.supermusic.controller;
 
 
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.web.bind.annotation.RestController;
+import com.torch.supermusic.service.IUserService;
+import com.torch.supermusic.util.argEntity.Register;
+import com.torch.supermusic.util.result.ResultUtils;
+import com.torch.supermusic.util.result.ResultVo;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * <p>
@@ -16,5 +19,19 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/user")
 public class UserController {
+
+    @Autowired
+    private IUserService userService;
+
+    @GetMapping("/getcode")
+    public ResultVo getCode(String mail){
+        return ResultUtils.success(userService.sendmail(mail));
+    }
+
+    @PostMapping("/register")
+    public ResultVo register(@RequestBody Register register){
+        System.out.println(register);
+        return ResultUtils.success(userService.register(register));
+    }
 
 }

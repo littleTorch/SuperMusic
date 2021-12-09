@@ -64,7 +64,11 @@ public class JwtTokenFilter extends OncePerRequestFilter {
         String url = request.getRequestURI();
         System.out.println(url);
             //验证token,验证码请求不需要验证token
-            if(!url.startsWith("/swagger-ui") && !url.startsWith("/getmusic")){
+//
+            if(!url.startsWith("/swagger-ui") &&
+                !url.startsWith("/getmusic") &&
+                !url.startsWith("/user/getcode") &&
+                !url.startsWith("/user/register")){
                 try{
                     validateToken(request);
                 }catch (AuthenticationException e){

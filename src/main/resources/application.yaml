@@ -69,12 +69,22 @@ spring:
       matching-strategy: ant_path_matcher
 
 
-  #mybatisPlus配置
+
   security:
     user:
       name: 123
       password: 123
 
+  mail:
+    default-encoding: UTF-8
+    host: smtp.qq.com
+    username: 1444504585@qq.com
+    password: ozwukvkehsgdfhgi
+    port: 587
+
+
+
+  #mybatisPlus配置
 mybatis-plus:
   mapper-locations: classpath:mapper/*.xml            # 配置mapper.xml路径
   check-config-location: true                         # 检查xml文件是否存在
@@ -88,5 +98,5 @@ mybatis-plus:
 
 jwt:
   secret: supermusic.com
-#  5天
+#  token过期时间：5天
   expiration: 432000000

@@ -1,4 +1,4 @@
-package com.torch.supermusic.entity;
+package com.torch.supermusic.util.argEntity;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
