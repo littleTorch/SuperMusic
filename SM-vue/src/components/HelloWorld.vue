@@ -98,7 +98,8 @@ a {
   #nav{
     width: 100%;
     height: 50px;
-    background: cornsilk;
+  
+     background: rgba(243, 243, 243, 0.7);
     display: flex;
     justify-content: center;
   }
@@ -110,7 +111,7 @@ a {
     justify-content: space-between;
   }
   a:hover{
-    background: lightcoral;
+    background: rgba(240, 128, 128, 0.7)
   }
 .navImg{
   width: 120px;
@@ -124,6 +125,7 @@ ul li{
   float: left;
 }
 ul li a{
+  transition: all 0.5s;
   display: block;
   height: 50px;
   line-height: 50px;

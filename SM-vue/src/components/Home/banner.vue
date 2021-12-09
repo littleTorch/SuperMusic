@@ -3,7 +3,7 @@
     
      <el-carousel indicator-position="outside">
     <el-carousel-item v-for="(item,index) in mybanners" :key="index">
-      <img :src="item.img" alt="">
+      <img :src="item" alt="">
     </el-carousel-item>
   </el-carousel>
 
