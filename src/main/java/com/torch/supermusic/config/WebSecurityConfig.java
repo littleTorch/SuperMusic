@@ -98,7 +98,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/**/*.xlsx",
                         "/swagger-resources/**").permitAll()//资源监测类接口放行
 //                .and().authorizeRequests()
-                .antMatchers( "/swagger-ui/**","/getmusic","/user/getcode","/user/register,'/swagger-ui","/v3/**","/swagger/**").permitAll()//登录,注册等无需身份的接口放行，其他接口全部接受验证
+                .antMatchers( "/swagger-ui/**","/getmusic","/user/getcode","/user/register,'/swagger-ui","/v3/**","/swagger/**","/druid/**").permitAll()//登录,注册等无需身份的接口放行，其他接口全部接受验证
                 //跨域请求会先进行一次OPTIONS请求
                 .antMatchers(HttpMethod.POST,"/login").permitAll()
                 .antMatchers(HttpMethod.OPTIONS).permitAll()
