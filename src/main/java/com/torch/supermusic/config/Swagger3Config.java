@@ -27,7 +27,7 @@ public class Swagger3Config {
         return new ApiInfoBuilder()
                 .title("Swagger3接口文档 ")
                 .description("更多请咨询服务开发者Torch。")
-                .contact(new Contact("Torch", "http://www.???????.cn", ".........."))
+                .contact(new Contact("Torch", "https://gitee.com/little_torch/super-music", "1444504585@qq.com"))
                 .version("1.0")
                 .build();
     }

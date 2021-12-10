@@ -6,6 +6,8 @@ import com.torch.supermusic.service.IPlaylistService;
 import com.torch.supermusic.service.IPlaylistSongService;
 import com.torch.supermusic.service.ISingerService;
 import com.torch.supermusic.service.ISongService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,6 +20,7 @@ import us.codecraft.webmagic.utils.HttpConstant;
 import java.util.HashMap;
 import java.util.Map;
 
+@Api(tags = {"音乐数据类"})
 @RestController
 public class GetMusicController {
 
@@ -30,6 +33,7 @@ public class GetMusicController {
     @Autowired
     private ISingerService singerService;
 
+    @ApiOperation("更新数据库")
     @GetMapping("/getmusic")
     public void getmusic(){
         delAllAboutMusicTabel();
@@ -50,7 +54,7 @@ public class GetMusicController {
     }
 
 
-    public void delAllAboutMusicTabel(){
+    private void delAllAboutMusicTabel(){
         playlistService.remove(new QueryWrapper<>());
         playlistSongService.remove(new QueryWrapper<>());
         songService.remove(new QueryWrapper<>());

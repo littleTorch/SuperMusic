@@ -23,7 +23,7 @@ import lombok.Setter;
 @Data
 @NoArgsConstructor
 @TableName("song")
-@ApiModel(value = "Song对象", description = "")
+@ApiModel(value = "Song", description = "")
 public class Song implements Serializable {
 
     private static final long serialVersionUID = 1L;

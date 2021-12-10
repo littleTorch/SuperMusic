@@ -65,7 +65,8 @@ public class JwtTokenFilter extends OncePerRequestFilter {
         System.out.println(url);
             //验证token,验证码请求不需要验证token
 //
-            if(!url.startsWith("/swagger-ui") &&
+            if(!url.startsWith("/swagger") &&
+                    !url.startsWith("/v3") &&
                 !url.startsWith("/getmusic") &&
                 !url.startsWith("/user/getcode") &&
                 !url.startsWith("/user/register")){

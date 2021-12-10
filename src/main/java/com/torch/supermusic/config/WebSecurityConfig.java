@@ -27,10 +27,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-/**
- * @www.codesheep.cn
- * 20190312
- */
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
@@ -102,7 +98,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/**/*.xlsx",
                         "/swagger-resources/**").permitAll()//资源监测类接口放行
 //                .and().authorizeRequests()
-                .antMatchers( "/swagger-ui/**","/getmusic","/user/getcode","/user/register").permitAll()//登录,注册等无需身份的接口放行，其他接口全部接受验证
+                .antMatchers( "/swagger-ui/**","/getmusic","/user/getcode","/user/register,'/swagger-ui","/v3/**","/swagger/**").permitAll()//登录,注册等无需身份的接口放行，其他接口全部接受验证
                 //跨域请求会先进行一次OPTIONS请求
                 .antMatchers(HttpMethod.POST,"/login").permitAll()
                 .antMatchers(HttpMethod.OPTIONS).permitAll()
@@ -116,8 +112,4 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         httpSecurity.headers().cacheControl();
     }
-
-
-
-
 }

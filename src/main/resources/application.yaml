@@ -2,6 +2,7 @@ server:
   port: 8080
 
 #swagger3 生产环境下ture
+#url:/swagger-ui/index.html
 #springfox:
 #  documentation:
 #    swagger-ui:
@@ -68,21 +69,18 @@ spring:
     pathmatch:
       matching-strategy: ant_path_matcher
 
-
-
   security:
     user:
       name: 123
       password: 123
 
+#  邮箱配置
   mail:
     default-encoding: UTF-8
     host: smtp.qq.com
     username: 1444504585@qq.com
     password: ozwukvkehsgdfhgi
     port: 587
-
-
 
   #mybatisPlus配置
 mybatis-plus:
@@ -100,3 +98,4 @@ jwt:
   secret: supermusic.com
 #  token过期时间：5天
   expiration: 432000000
+
