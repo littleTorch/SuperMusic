@@ -46,11 +46,7 @@ public class LoginFailureHandler implements AuthenticationFailureHandler {
         } else if (e instanceof InternalAuthenticationServiceException) {
             //用户不存在
             str = "用户不存在，登录失败!";
-        }/*else if(e instanceof ImageCodeException){
-            //验证码异常
-            code = 800;
-            str = e.getMessage();
-        }*/ else if(e instanceof TokenException){
+        } else if(e instanceof TokenException){
             //token异常
             code = 600;
             str = e.getMessage();

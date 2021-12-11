@@ -1,12 +1,10 @@
 package com.torch.supermusic.config;
 
 import com.torch.supermusic.filter.JwtTokenFilter;
-import com.torch.supermusic.handler.CustomAccessDeineHandler;
-import com.torch.supermusic.handler.CustomizeAuthenticationEntryPoint;
-import com.torch.supermusic.handler.LoginFailureHandler;
-import com.torch.supermusic.handler.LoginSuccessHandler;
+import com.torch.supermusic.handler.*;
 import com.torch.supermusic.service.IUserService;
 import com.torch.supermusic.service.impl.UserServiceImpl;
+import org.apache.catalina.security.SecurityConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.RegistrationBean;
@@ -29,6 +27,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled=true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
@@ -41,7 +40,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private CustomAccessDeineHandler customAccessDeineHandler;
     @Autowired
     private CustomizeAuthenticationEntryPoint customizeAuthenticationEntryPoint;
-
+    @Autowired
+    private MyLogoutSuccessHandler logoutSuccessHandler;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -67,43 +67,70 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return authenticationProvider;
     }
 
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userService);
         auth.authenticationProvider(authenticationProvider());
     }
 
+//    静态资源放行
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring().antMatchers("/.html",
+                "/**/*.html",
+                "/**/*.css",
+                "/**/*.js",
+                "/**/*.xlsx",
+                "/swagger-resources/**");
+    }
+
     @Override
     protected void configure( HttpSecurity httpSecurity ) throws Exception {
-//      添加过滤器
         httpSecurity
-                .addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);
-
-        httpSecurity.formLogin()
-//               对login请求进行处理
+                //对login请求进行处理
+                .formLogin()
                 .loginProcessingUrl("/login")
                 .successHandler(loginSuccessHandler)
                 .failureHandler(loginFailureHandler)
+
+                // 注销
                 .and()
-                .csrf().disable()//关闭CSRF
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)//禁用session
+                .logout()
+                .logoutUrl("/logout")
+                .logoutSuccessHandler(logoutSuccessHandler)
+                .permitAll()
+
+                // 权限
                 .and()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.GET,
-                        "/",
-                        "/.html",
-                        "/**/*.html",
-                        "/**/*.css",
-                        "/**/*.js",
-                        "/**/*.xlsx",
-                        "/swagger-resources/**").permitAll()//资源监测类接口放行
-//                .and().authorizeRequests()
-                .antMatchers( "/swagger-ui/**","/getmusic","/user/getcode","/user/register,'/swagger-ui","/v3/**","/swagger/**","/druid/**").permitAll()//登录,注册等无需身份的接口放行，其他接口全部接受验证
                 //跨域请求会先进行一次OPTIONS请求
-                .antMatchers(HttpMethod.POST,"/login").permitAll()
                 .antMatchers(HttpMethod.OPTIONS).permitAll()
-//                开发时先全部放行
-                .anyRequest().authenticated()
+                //一些不需要权限的请求
+                .antMatchers("/swagger-ui/**",
+                        "/getmusic",
+                        "/user/getcode",
+                        "/user/register",
+                        "/swagger-ui",
+                        "/v3/**",
+                        "/swagger/**",
+                        "/druid/**",
+                        "/login").permitAll()
+                //其他都需要权限
+                .anyRequest()
+                .authenticated()
+
+                //添加过滤器
+                .and()
+                .addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class)
+
+                //关闭CSRF
+                .csrf().disable()
+
+                //禁用session
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+
+                // 自定义异常处理
                 .and()
                 .exceptionHandling()
                 .authenticationEntryPoint(customizeAuthenticationEntryPoint)

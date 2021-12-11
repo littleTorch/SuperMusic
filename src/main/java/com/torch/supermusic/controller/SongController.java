@@ -47,24 +47,18 @@ public class SongController {
     @ApiOperation("更新歌曲")
     @PutMapping("/updata")
     public ResultVo updata(@RequestBody Song song){
-        System.out.println(song);
         return songService.updateById(song)? ResultUtils.success("修改成功"):ResultUtils.error("修改失败");
     }
 
     @ApiOperation("添加歌曲")
     @PostMapping("/add")
     public ResultVo add(@RequestBody Song song){
-        System.out.println(song);
-        boolean update = songService.save(song);
-        return update? ResultUtils.success("添加成功"):ResultUtils.error("添加失败");
+        return songService.save(song)? ResultUtils.success("添加成功"):ResultUtils.error("添加失败");
     }
 
     @ApiOperation("删除歌曲")
-    @DeleteMapping(value = "/dels",produces = {"application/json;charset=utf-8"})
+    @DeleteMapping(value = "/dels")
     public ResultVo delete(@RequestBody String[] ids){
-        for (String id : ids) {
-            System.out.println("**************"+id);
-        }
         return songService.removeByIds(Arrays.asList(ids)) ? ResultUtils.success("删除成功") : ResultUtils.success("删除失败") ;
     }
 }

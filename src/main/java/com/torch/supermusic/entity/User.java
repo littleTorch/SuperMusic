@@ -80,11 +80,6 @@ public class User implements Serializable , UserDetails {
     @TableField(exist = false)
     Collection<? extends GrantedAuthority> authorities;
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return authorities;
-    }
-
     //账户没有过期
     @Override
     public boolean isAccountNonExpired() {

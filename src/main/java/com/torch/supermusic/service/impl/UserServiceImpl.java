@@ -49,16 +49,24 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     @Override
     public User loadUserByUsername(String username) throws UsernameNotFoundException {
         System.out.println("loadUserByUsername::::" + username);
-        User user = getOne(new QueryWrapper<User>().eq("username", username));
-        if (user == null) {
-            throw new UsernameNotFoundException("用户不存在");
+        //先在redis中查找
+        User user = (User) redisUtil.get(username);
+        if (user==null){
+            //如果没有就去数据库查找
+            user = getOne(new QueryWrapper<User>().eq("username", username));
+            if (user == null) {
+                throw new UsernameNotFoundException("用户不存在");
+            }
+            List<UserRole> user_id = userRoleService.list(new QueryWrapper<UserRole>().eq("user_id", user.getId()));
+            ArrayList ids = new ArrayList<>();
+            for (UserRole userRole : user_id) {
+                ids.add(userRole.getId());
+            }
+            user.setRoles(roleService.listByIds(ids));
+            //保存到redis中
+            redisUtil.set(username,user,24*60*60);
         }
-        List<UserRole> user_id = userRoleService.list(new QueryWrapper<UserRole>().eq("user_id", user.getId()));
-        ArrayList ids = new ArrayList<>();
-        for (UserRole userRole : user_id) {
-            ids.add(userRole.getId());
-        }
-        user.setRoles(roleService.listByIds(ids));
+        System.out.println(user);
         return user;
     }
 
@@ -67,7 +75,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 //        判断是否在一分钟内发送过
         Object o = redisUtil.get(mail);
         if (o == null) {
-            int code = RandomUtil.randomInt(1000, 9999);
+            int code = RandomUtil.randomInt(100000, 999999);
             redisUtil.set(mail + "code", code, 10 * 60);
             redisUtil.set(mail, new Date(), 60);
             StringBuilder text = new StringBuilder();

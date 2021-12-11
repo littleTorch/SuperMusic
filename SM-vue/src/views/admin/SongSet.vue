@@ -1,11 +1,11 @@
 <template>
     <el-main>
         <!--搜索框-->
-        <el-form :model="checkinFrom" label-width="80px">
+        <el-form :model="select" label-width="80px">
             <el-row>
                 <el-col :span="5">
                     <el-form-item label="歌曲名:">
-                        <el-input v-model="musicName" placeholder="请输入内容"></el-input>
+                        <el-input v-model="select.musicName" placeholder="请输入内容"></el-input>
                     </el-form-item>
                 </el-col>
                 <el-button
@@ -112,8 +112,7 @@
         <el-dialog title="歌曲详情" :visible.sync="detailsVisible" width="80%">
             <el-form
                 style="text-align:center"
-                :model="checkin"
-
+                :model="detailsData"
                 label-width="120px"
                 disabled
             >
@@ -150,17 +149,19 @@ export default {
             },
             tableData: '',
             tableChecked: [],
-            musicName: '',
+            select: {
+                musicName: ''
+            },
             detailsVisible: false,
             detailsData: '',
             updateVisible: false,
-            updataData:'',
-            addOneVisible:false,
-            addOneForm:{
-                pictureUrl:'',
-                singerId:'',
-                name:'',
-                songUrl:''
+            updataData: '',
+            addOneVisible: false,
+            addOneForm: {
+                pictureUrl: '',
+                singerId: '',
+                name: '',
+                songUrl: ''
             }
         }
     },
@@ -176,7 +177,7 @@ export default {
         sel(pageNo) {
             this.axios.get("song/page", {
                 params: {
-                    arg: this.musicName,
+                    arg: this.select.musicName,
                     pageSize: this.page.pageSize,
                     currentPage: pageNo,
                 }
@@ -192,7 +193,7 @@ export default {
                 }
             })
         },
-        addOne(){
+        addOne() {
             this.axios.post("song/add", JSON.stringify(this.addOneForm)).then(res => {
                 console.log(res);
                 if (res.data.code == 200) {
@@ -233,10 +234,11 @@ export default {
                 }
             })
         },
-        del(ids){
+        del(ids) {
             console.log(JSON.stringify(ids))
-            this.axios.delete("/song/dels",{
-                data:JSON.stringify(ids)}).then(res => {
+            this.axios.delete("/song/dels", {
+                data: JSON.stringify(ids)
+            }).then(res => {
                 console.log(res);
                 if (res.data.code == 200) {
                     this.updateVisible = false;
@@ -271,16 +273,17 @@ export default {
         },
         deleteOneClick(id) {
             console.log(id)
-            let ids=[id];
+            let ids = [id];
             this.del(ids);
         },
         updateClick(row) {
             console.log(row)
             this.updateVisible = true;
-            this.updataData = JSON.parse(JSON.stringify(row));;
+            this.updataData = JSON.parse(JSON.stringify(row));
+            ;
         },
         AddOneClick() {
-            this.addOneVisible=true;
+            this.addOneVisible = true;
         },
         details(row) {
             this.detailsVisible = true;
