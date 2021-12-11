@@ -2,6 +2,8 @@ package com.torch.supermusic.service.impl;
 
 import cn.hutool.core.util.RandomUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.torch.supermusic.entity.Authority;
+import com.torch.supermusic.entity.Role;
 import com.torch.supermusic.entity.User;
 import com.torch.supermusic.entity.UserRole;
 import com.torch.supermusic.mapper.UserMapper;
@@ -13,6 +15,8 @@ import com.torch.supermusic.util.RedisUtil;
 import com.torch.supermusic.util.SendEmail;
 import com.torch.supermusic.util.argEntity.Register;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -57,16 +61,27 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
             if (user == null) {
                 throw new UsernameNotFoundException("用户不存在");
             }
-            List<UserRole> user_id = userRoleService.list(new QueryWrapper<UserRole>().eq("user_id", user.getId()));
+            //根据用户id查找权限id
             ArrayList ids = new ArrayList<>();
-            for (UserRole userRole : user_id) {
-                ids.add(userRole.getId());
+            for (UserRole userRole : userRoleService.list(new QueryWrapper<UserRole>().eq("user_id", user.getId()))) {
+                ids.add(userRole.getRoleId());
             }
-            user.setRoles(roleService.listByIds(ids));
+            //根据权限id查找权限，并保存到用户的Role属性里
+            List<Role> roles = roleService.listByIds(ids);
+            user.setRoles(roles);
+            //写入权限
+            List<GrantedAuthority> list=new ArrayList<>();
+            for (Role role : roles) {
+                list.add(new Authority(role.getName()));
+            }
+            user.setAuthorities(list);
             //保存到redis中
             redisUtil.set(username,user,24*60*60);
         }
         System.out.println(user);
+        for (GrantedAuthority authority : user.getAuthorities()) {
+            System.out.println("权限："+authority.getAuthority());
+        }
         return user;
     }
 

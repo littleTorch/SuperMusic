@@ -13,6 +13,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -27,6 +28,7 @@ import org.springframework.security.core.userdetails.UserDetails;
  * @since 2021-12-03
  */
 @Data
+@NoArgsConstructor
 @TableName("user")
 @ApiModel(value = "User对象", description = "")
 public class User implements Serializable , UserDetails {
@@ -78,7 +80,7 @@ public class User implements Serializable , UserDetails {
     //由于authorities不是数据库里面的字段，所以要排除他，不然mybatis-plus找不到该字段会报错
     @ApiModelProperty(value = "权限")
     @TableField(exist = false)
-    Collection<? extends GrantedAuthority> authorities;
+    private Collection<? extends GrantedAuthority> authorities;
 
     //账户没有过期
     @Override
