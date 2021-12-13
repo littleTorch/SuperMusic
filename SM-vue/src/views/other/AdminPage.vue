@@ -75,6 +75,7 @@ export default {
 .right {
     float: right;
     height: auto;
+    border: 1px solid silver;
 }
 
 .aa {

@@ -33,12 +33,14 @@ export default {
   },
   methods: {
     onSuccess() {//往父级传递验证通过的函数
-      this.$emit("success");
+      this.$emit("success",true);
     },
     onReset() {//重置图片验证组件
       this.$refs.slideverify.reset();
     },
-    onFail() {},    
+    onFail() {
+        this.$emit("success",false);
+    },
     onRefresh() {},
   },
 };
