@@ -89,6 +89,12 @@ const routes = [
     component: () => import('../views/other/Singer.vue'),
   },
   {
+    path: '/Singer_profile',
+    name: 'Singer_profile',
+
+    component: () => import('../views/other/Singer_profile.vue'),
+  },
+  {
     path: '/SongSheet',
     name: 'SongSheet',
 

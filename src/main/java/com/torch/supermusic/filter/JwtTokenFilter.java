@@ -4,6 +4,7 @@ import com.torch.supermusic.entity.User;
 import com.torch.supermusic.service.impl.UserServiceImpl;
 import com.torch.supermusic.util.JwtTokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
@@ -19,6 +20,7 @@ import java.io.IOException;
 @Component
 public class JwtTokenFilter extends OncePerRequestFilter {
 
+    @Qualifier("userServiceImpl")
     @Autowired
     private UserServiceImpl userDetailsService;
 

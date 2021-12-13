@@ -5,6 +5,7 @@
     </div>
     
 
+
   </div>
 </template>
 
@@ -18,23 +19,29 @@ export default {
     HelloWorld
   },data(){
     return{
-      banners:[require('../assets/img/banner/banner1.jpg'),require('../assets/img/banner/banner2.jpg'),require('../assets/img/banner/banner3.jpg'),
-        require('../assets/img/banner/banner4.jpg'),require('../assets/img/banner/banner5.jpg'),require('../assets/img/banner/banner6.jpg'),
-      ],
-   
+      banners:[],
+      //要放在父组件才会生效
+      // swiperOptions: {
+      //     pagination: {
+      //       el: '.swiper-pagination'
+      //     }         ,
+      //         loop: true,
+      //   autoplay:true,
+      // autoplay: {
+      //     disableOnInteraction: false
+      // }
         }
   
   },methods:{
     
       getData(){
-      this.axios.getChengpin6()
+      this.$api.getChengpin6()
       .then(res =>{
-        console(res.data)
         //res.data.??.map(item => ({??"item.数据名称可以套娃继续点."}))
-          // this.banners = res.data.banners.map(item =>({img: item.imageUrl}))
+          this.banners = res.data.banners.map(item =>({img: item.imageUrl}))
           //this.??.map(item => item. )
-      //     console.log(this.banners.map(item => item.img))
-      // console.log(res.data)
+          console.log(this.banners.map(item => item.img))
+      console.log(res.data)
       })
       .catch(error =>{
         console.log('请求失败');
@@ -43,7 +50,7 @@ export default {
   
   },
  created(){
-  //  this.getData();
+   this.getData();
 
  }
 }

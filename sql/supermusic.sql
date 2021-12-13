@@ -13,8 +13,6 @@ File Encoding         : 65001
 Date: 2021-12-06 15:52:56
 */
 
-CREATE DATABASE supermusic;
-USE supermusic;
 SET FOREIGN_KEY_CHECKS=0;
 
 -- ----------------------------

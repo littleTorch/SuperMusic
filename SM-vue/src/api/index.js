@@ -10,30 +10,27 @@ import axios from "../utils/https"
 
 
 const api = {
-    getChengpin() {
-        return axios.get(base.baseUrl + base.chengping);
+    getChengpin(){
+        return axios.get(base.baseUrl+base.chengping);
     },
-    getChengpin2() {
-        return axios.get(base.baseUrl2 + base.chengping2);
-    }, getChengpin3() {
-        return axios.get(base.musicApi + base.musicA);
-    }, getChengpin4(params) {
-        return axios.get(base.musicApi + base.musicAB, {
-            params: params
+    getChengpin2(){
+        return axios.get(base.baseUrl2+base.chengping2);
+    },getChengpin3(){
+        return axios.get(base.musicApi+base.musicA);
+    },getChengpin4(params){
+        return axios.get(base.musicApi+base.musicAB,{
+            params:params
             //传参方式
         });
-    }, getChengpin5(params) {
-        return axios.get(base.musicApi + base.musicAC, {
-            params: params
+    },getChengpin5(params){
+        return axios.get(base.musicApi+base.musicAC,{
+            params:params
             //传参方式
         });
-    }, getChengpin6() {
-        return axios.get(base.musicApi + base.musicAbanner, {
+    },getChengpin6(){
+        return axios.get(base.musicApi+base.musicAbanner,{
             //传参方式
         });
-    },
-    getRaknkingList1() {
-        return axios.get(base.musicApi + base.musicRlist1);
     }
 
 }
