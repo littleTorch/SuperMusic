@@ -66,6 +66,15 @@ spring:
     password: ozwukvkehsgdfhgi
     port: 587
 
+  servlet:
+    multipart:
+#      单文件上传最大值
+      max-file-size: 50MB
+#      上传文件总最大值
+      max-request-size: 300MB
+
+
+
   #mybatisPlus配置
 mybatis-plus:
   mapper-locations: classpath:mapper/*.xml            # 配置mapper.xml路径

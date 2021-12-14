@@ -1,13 +1,15 @@
 package com.torch.supermusic;
 
-import com.torch.supermusic.controller.GetMusicController;
 import com.torch.supermusic.entity.User;
+
 import com.torch.supermusic.service.IUserService;
 import com.torch.supermusic.util.SendEmail;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+import java.util.List;
 
 
 @SpringBootTest
@@ -17,6 +19,7 @@ class SupermusicApplicationTests {
     IUserService userService;
     @Autowired
     SendEmail sendEmail;
+
 
     @Test
     void contextLoads() {
