@@ -34,7 +34,7 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
         //2.生成token
         String token = jwtUtils.generateToken(user);
 //          返回token
-        String res = JSONObject.toJSONString(ResultUtils.success("认证成功",token), SerializerFeature.DisableCircularReferenceDetect);
+        String res = JSONObject.toJSONString(ResultUtils.success("登录成功",token), SerializerFeature.DisableCircularReferenceDetect);
         httpServletResponse.setContentType("application/json;charset=UTF-8");
         ServletOutputStream out = httpServletResponse.getOutputStream();
         out.write(res.getBytes("UTF-8"));
