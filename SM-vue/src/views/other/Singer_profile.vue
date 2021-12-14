@@ -1,16 +1,23 @@
 <template>
+    <div class="singerMain1">
+        <div class="singerCon2">
+            <el-container>
+                <el-aside>
+                    <div class="block2">
+                        <el-avatar shape="square" :size="100" :src="singer.icon"></el-avatar>
+                        <p>{{singer.singerName}}</p>
+                        <p>{{singer.profile}}</p>
 
-    <el-container>
-        <el-aside>
-            <div class="block">
-                <el-avatar shape="square" :size="100" :src="singer.icon"></el-avatar>
-                <span>{{singer.profile}}</span>
-            </div>
-        </el-aside>
-        <el-main>
-            {{song}}
-        </el-main>
-    </el-container>
+                    </div>
+                </el-aside>
+                <el-main>
+                    {{song}}
+                </el-main>
+            </el-container>
+        </div>
+    </div>
+
+
 
 </template>
 
@@ -36,7 +43,7 @@
             // }
             profile(){
                 this.singer=this.$route.query.dataObj;
-                console.log(this.singer)
+                // console.log(this.singer)
             },
             singerId(){
                 this.axios.get("/song/singerByid/"+this.singer.id).then(res=>{
@@ -68,6 +75,8 @@
         text-align: center;
         line-height: 160px;
     }
+.singerCon2{
 
+}
 
 </style>

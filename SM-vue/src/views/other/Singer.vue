@@ -1,24 +1,40 @@
 <template>
+<div class="singerMain">
+  <div class="elCon">
+    <el-container >
+      <el-header>
+        <h5>歌手</h5>
+        <div class="search">
 
-  <el-container>
-    <el-header>歌手</el-header>
-    <el-main>
-      <div class="con">
-        <div class="block" v-for="item of singerData" @click="clickSinger(item)">
-          <el-avatar shape="circle" :size="150"  :src="item.icon"></el-avatar>
-<!--          <a v-bind:href='axios.get("/singer")'>{{singerData}}</a>-->
+          <el-input
+                  placeholder="请输入歌手"
+                  prefix-icon="el-icon-search"
+                  v-model="input1">
+          </el-input>
         </div>
-      </div>
-    </el-main>
-    <el-pagination
-            @size-change="handleSizeChange"
-            @current-change="handleCurrentChange"
-            :current-page="page.currentPage"
-            :page-size="page.pageSize"
-            :total="page.totalCount"
-            layout="total, prev, pager, next"
-    ></el-pagination>
-  </el-container>
+      </el-header>
+      <el-main class="singerBox">
+        <div class="con">
+          <div class="block" v-for="item of singerData" @click="clickSinger(item)">
+            <el-avatar shape="circle" :size="120"  :src="item.icon"></el-avatar>
+            <span>{{item.singerName}}</span>
+            <!--          <a v-bind:href='axios.get("/singer")'>{{singerData}}</a>-->
+          </div>
+        </div>
+      </el-main>
+      <el-pagination
+              @size-change="handleSizeChange"
+              @current-change="handleCurrentChange"
+              :current-page="page.currentPage"
+              :page-size="page.pageSize"
+              :total="page.totalCount"
+              layout="total, prev, pager, next"
+      ></el-pagination>
+    </el-container>
+  </div>
+
+</div>
+
 </template>
 
 
@@ -30,7 +46,7 @@
         // singer: "",
         page: {
           currentPage: 1, // 当前页
-          pageSize: 24, // 每页显示条目个数
+          pageSize: 32, // 每页显示条目个数
           totalCount: '' // 总条目数
         },
       }
@@ -47,7 +63,7 @@
             currentPage: currentPage,
           }
         }).then(res => {
-          console.log(res);
+          // console.log(res);
           this.singerData=res.data;
           if (res.data.code == 200) {
             this.singerData = res.data.data.records;
@@ -84,7 +100,22 @@
 
 
 <style>
+  *{
+    padding: 0;
+    margin: 0;
+  }
+  .singerMain{
+
+    display: flex;
+    justify-content: center;
+  }
+  .elCon{
+    width: 1200px;
+    min-width:900px;
+    height: 100%;
+  }
   .el-main {
+
     background-color: #E9EEF3;
     color: #333;
     padding: 0;
@@ -96,7 +127,18 @@
     text-align: left;
     line-height: 60px;
     font-weight: bolder;
+
+
+  }
+  .el-header h5{
+    float: left;
     font-size: 50px;
+  }
+  .search{
+    float: right;
+    line-height: 60px;
+    height: 60px;
+    overflow: hidden;
   }
 
   .el-container {
@@ -104,11 +146,27 @@
   }
 
   .el-avatar{
-    float: left;
-    margin: 15px;
   }
   .el-pagination{
     text-align: center;
     padding: 40px 0 0 0;
+  }
+  .con{
+    width: 100%;
+    text-align: center;
+
+  }
+  /*每个歌手div*/
+  .block{
+
+    width:125px;
+    height: 180px;
+    float: left;
+    overflow: hidden;
+    text-align: center;
+    margin: 8px;
+  }
+  .block img{
+    margin: 0 auto;
   }
 </style>
