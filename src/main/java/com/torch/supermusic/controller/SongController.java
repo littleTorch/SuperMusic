@@ -67,4 +67,13 @@ public class SongController {
     public ResultVo delete(@RequestBody String[] ids){
         return songService.removeByIds(Arrays.asList(ids)) ? ResultUtils.success("删除成功") : ResultUtils.success("删除失败") ;
     }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @ApiOperation("查询歌手")
+    @GetMapping("/singerByid/{id}")
+    public ResultVo selectSingerId(@PathVariable("id") Long singerId){
+        System.out.println(singerId);
+        return ResultUtils.success("查询成功",songService.list(new QueryWrapper<Song>().eq("singer_id",singerId)));
+    }
+
 }

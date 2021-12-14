@@ -8,7 +8,7 @@
             </div>
         </el-aside>
         <el-main>
-            {{}}
+            {{song}}
         </el-main>
     </el-container>
 
@@ -18,11 +18,13 @@
     export default {
         data() {
             return{
-                singer: ""
+                singer: "",
+                song: ""
             }
         },
         created() {
             this.profile()
+            this.singerId()
         },
         methods: {
             // profile(){
@@ -35,6 +37,12 @@
             profile(){
                 this.singer=this.$route.query.dataObj;
                 console.log(this.singer)
+            },
+            singerId(){
+                this.axios.get("/song/singerByid/"+this.singer.id).then(res=>{
+                    console.log(res);
+                    this.song=res.data.data
+                })
             }
         }
     }
