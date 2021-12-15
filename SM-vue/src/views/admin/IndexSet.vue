@@ -12,7 +12,6 @@
             border
             style="width: 100%"
             tooltip-effect="dark">
-            <el-table-column align="center" type="selection"></el-table-column>
             <el-table-column align="center" prop="imgName" label="图片名" show-overflow-tooltip></el-table-column>
             <el-table-column label="操作" width="250" align="center">
                 <template slot-scope="scope">
@@ -53,7 +52,7 @@
         </el-dialog>
 
         <el-dialog title="图片详情" :visible.sync="detailsVisible" width="80%">
-            <el-image :src="'http://localhost:8080/home-slide/showImg?imgUrl='+detailsData" lazy></el-image>
+            <el-image :src="detailsData" lazy></el-image>
             <span slot="footer" class="dialog-footer">
                 <el-button @click="detailsVisible = false">取 消</el-button>
                 <el-button @click="detailsVisible = false" type="primary">确 定</el-button>
@@ -139,8 +138,13 @@ export default {
         },
         details(row) {
             this.detailsVisible = true;
-            console.log(row);
-            this.detailsData = row.imgName;
+            let str=window.location.href;
+            //获取当前链接用正则匹配出服务器地址再拼接上去
+            // let urlhead=str.match(/^.*[a-zA-Z0-9][-a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-a-zA-Z0-9]{0,62})+\.?/)[0];
+            //挂到公网上使用
+            // this.detailsData = "http://sm2.v.frp.fit/home-slide/showImg?imgUrl="+row.imgName;
+            //本地开发使用
+            this.detailsData = "http://localhost:8080/home-slide/showImg?imgUrl="+row.imgName;
         },
         //表格前的复选框点击事件
         handleSelectionChange(val) {

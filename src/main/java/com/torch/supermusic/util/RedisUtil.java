@@ -149,6 +149,24 @@ public final class RedisUtil {
         return redisTemplate.opsForValue().increment(key, delta);
     }
 
+    /**
+     * 递增
+     *
+     * @param key   键(没有就加进去一个)
+     * @param delta 要增加几(大于0)
+     */
+    public long setIncr(String key, long delta) {
+        if (delta < 0) {
+            throw new RuntimeException("递增因子必须大于0");
+        }
+        boolean b = hasKey(key);
+        System.out.println(key+b);
+        if (!b){
+            set(key,1,100);
+        }
+        return redisTemplate.opsForValue().increment(key, delta);
+    }
+
 
     /**
      * 递减
