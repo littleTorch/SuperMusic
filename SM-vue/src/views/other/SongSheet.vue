@@ -1,26 +1,31 @@
 <template>
+
     <div>
-歌单
-<button @clink="getData">dddddddd</button>
+        <el-avatar v-for="item of songSheet" shape="square" :size="100" :src="item.icon"></el-avatar>
     </div>
+
 </template>
+
+
 <script>
 export default{
-   methods:{
-
-getData(){
-            this.$api.getSong()
-               .then(res =>{
-        
-                     console.log(res.data)
-      })
-      .catch(error =>{
-        console.log('请求失败');
-      })
+    data() {
+        return {
+            songSheet: [],
         }
-
+    },
+    created() {
+        this.playlist()
+    },
+    methods:{
+        playlist() {
+            this.axios.get("/playlist").then(
+                res =>{
+                    console.log(res);
+                    this.songSheet=res.data.data;
+                    console.log(this.songSheet)
+                })
+        }
    }
-        
-    
 }
 </script>
