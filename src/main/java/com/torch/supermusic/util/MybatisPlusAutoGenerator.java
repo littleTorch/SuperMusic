@@ -17,15 +17,19 @@ public class MybatisPlusAutoGenerator {
         String url="jdbc:mysql://127.0.0.1:3306/supermusic?autoReconnect=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=CONVERT_TO_NULL&useSSL=false&serverTimezone=GMT%2B8";
 
         ArrayList<String> tables = new ArrayList<>();
-        tables.add("permission");
-        tables.add("playlist");
-        tables.add("playlist_song");
-        tables.add("role");
-        tables.add("role_permission");
-        tables.add("singer");
-        tables.add("song");
-        tables.add("user");
-        tables.add("user_role");
+        //tables.add("permission");
+        //tables.add("playlist");
+        //tables.add("playlist_song");
+        //tables.add("role");
+        //tables.add("role_permission");
+        //tables.add("singer");
+        //tables.add("song");
+        //tables.add("user");
+        //tables.add("user_role");
+        tables.add("home_slide");
+        tables.add("home_playlist");
+        tables.add("home_singer");
+
 
 
         FastAutoGenerator.create(url, username, password)
