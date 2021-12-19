@@ -1,7 +1,8 @@
 <template>
 
     <div>
-        <el-avatar v-for="item of songSheet" shape="square" :size="100" :src="item.icon"></el-avatar>
+        <el-avatar v-for="item of songSheet" shape="square" :size="100" :src="item.icon" @click.native="profile(item)">
+        </el-avatar>
     </div>
 
 </template>
@@ -15,7 +16,7 @@ export default{
         }
     },
     created() {
-        this.playlist()
+        this.playlist();
     },
     methods:{
         playlist() {
@@ -23,8 +24,16 @@ export default{
                 res =>{
                     console.log(res);
                     this.songSheet=res.data.data;
-                    console.log(this.songSheet)
                 })
+        },
+        profile(id) {
+            console.log(id);
+            this.$router.push({
+                path: '/SongSheet_profile',
+                query: {
+                    dataObj: id
+                }
+            })
         }
    }
 }

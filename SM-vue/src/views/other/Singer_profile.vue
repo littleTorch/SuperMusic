@@ -34,13 +34,6 @@
             this.singerId()
         },
         methods: {
-            // profile(){
-            //     this.$route.params.dataobj;
-            //     this.axios.get("/singer/byid/"+this.$route.params.dataobj).then(res=>{
-            //         console.log(res);
-            //         this.singerData=res.data.data;
-            //     })
-            // }
             profile(){
                 this.singer=this.$route.query.dataObj;
                 // console.log(this.singer)

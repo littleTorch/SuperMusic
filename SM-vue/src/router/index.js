@@ -100,6 +100,12 @@ const routes = [
 
     component: () => import('../views/other/SongSheet.vue'),
   },
+  {
+    path: '/SongSheet_profile',
+    name: 'SongSheet_profile',
+
+    component: () => import('../views/other/SongSheet_profile.vue'),
+  }
 ]
 
 const router = new VueRouter({
