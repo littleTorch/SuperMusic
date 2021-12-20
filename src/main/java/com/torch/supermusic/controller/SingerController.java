@@ -39,6 +39,7 @@ public class SingerController {
         return new ResultUtils().success("查询成功",singerService.list());
     }
 
+
     @ApiOperation("歌手分页")
     @GetMapping("/page")
     public ResultVo PageSinger(SelectAndPage selectAndPage){

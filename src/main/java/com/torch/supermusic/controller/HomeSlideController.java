@@ -57,7 +57,7 @@ public class HomeSlideController {
     }
 
     @ApiOperation("获取图片列表")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('NORMAL')")
     @GetMapping("/getImgsUrl")
     public ResultVo getImg() {
         ArrayList<String> files = new ArrayList<>();
@@ -68,6 +68,7 @@ public class HomeSlideController {
         return ResultUtils.success("获取成功！", files);
     }
 
+    @PreAuthorize("hasRole('NORMAL')")
     @ApiOperation("获取图片")
     @GetMapping("/showImg")
     public void ShowImg(String imgUrl, HttpServletResponse response) {
@@ -89,6 +90,8 @@ public class HomeSlideController {
         }
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
+    @ApiOperation("删除图片")
     @DeleteMapping("/del")
     public ResultVo del(@RequestBody String name) {
         String str = name.replace("\"", "");

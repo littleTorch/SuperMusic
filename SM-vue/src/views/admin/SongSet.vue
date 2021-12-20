@@ -1,5 +1,5 @@
 <template>
-    <el-main>
+    <el-main style="margin-top: 10px">
         <!--搜索框-->
         <el-form :model="select" label-width="80px">
             <el-row>
@@ -32,7 +32,7 @@
             <el-table-column align="center" type="selection"></el-table-column>
             <el-table-column align="center" prop="name" label="歌名" show-overflow-tooltip></el-table-column>
             <el-table-column align="center" prop="pictureUrl" label="封面路径" show-overflow-tooltip></el-table-column>
-            <el-table-column align="center" prop="singerId" label="歌手ID"></el-table-column>
+            <el-table-column align="center" prop="singer.singerName" label="歌手"></el-table-column>
             <el-table-column align="center" prop="songUrl" label="歌曲路径" show-overflow-tooltip></el-table-column>
             <el-table-column label="操作" width="250" align="center">
                 <template slot-scope="scope">
@@ -61,7 +61,6 @@
 
         <el-dialog title="新增歌曲" :visible.sync="addOneVisible" width="80%">
             <el-form
-                style="text-align:center"
                 :model="addOneForm"
                 label-width="120px"
             >
@@ -71,8 +70,15 @@
                 <el-form-item label="歌曲封面路径：">
                     <el-input v-model="addOneForm.pictureUrl" placeholder=""></el-input>
                 </el-form-item>
-                <el-form-item label="歌手ID：">
-                    <el-input v-model="addOneForm.singerId" placeholder=""></el-input>
+                <el-form-item label="歌手：">
+                    <el-select v-model="addOneForm.singerId" filterable placeholder="请选择">
+                        <el-option
+                            v-for="item in singers"
+                            :key="item.id"
+                            :label="item.singerName"
+                            :value="item.id">
+                        </el-option>
+                    </el-select>
                 </el-form-item>
                 <el-form-item label="歌曲路径：">
                     <el-input v-model="addOneForm.songUrl" placeholder=""></el-input>
@@ -86,7 +92,6 @@
 
         <el-dialog title="修改歌曲" :visible.sync="updateVisible" width="80%">
             <el-form
-                style="text-align:center"
                 :model="updataData"
                 label-width="120px"
             >
@@ -96,8 +101,15 @@
                 <el-form-item label="歌曲封面路径：">
                     <el-input v-model="updataData.pictureUrl" placeholder=""></el-input>
                 </el-form-item>
-                <el-form-item label="歌手ID：">
-                    <el-input v-model="updataData.singerId" placeholder=""></el-input>
+                <el-form-item label="歌手：" v-if="updataData">
+                    <el-select v-model="updataData.singerId" filterable placeholder="请选择">
+                        <el-option
+                            v-for="item in singers"
+                            :key="item.id"
+                            :label="item.singerName"
+                            :value="item.id">
+                        </el-option>
+                    </el-select>
                 </el-form-item>
                 <el-form-item label="歌曲路径：">
                     <el-input v-model="updataData.songUrl" placeholder=""></el-input>
@@ -122,8 +134,8 @@
                 <el-form-item label="歌曲封面路径：">
                     <el-input v-model="detailsData.pictureUrl" placeholder=""></el-input>
                 </el-form-item>
-                <el-form-item label="歌手ID：">
-                    <el-input v-model="detailsData.singerId" placeholder=""></el-input>
+                <el-form-item label="歌手：" v-if="detailsData.singer">
+                    <el-input v-model="detailsData.singer.singerName" placeholder=""></el-input>
                 </el-form-item>
                 <el-form-item label="歌曲路径：">
                     <el-input v-model="detailsData.songUrl" placeholder=""></el-input>
@@ -162,11 +174,13 @@ export default {
                 singerId: '',
                 name: '',
                 songUrl: ''
-            }
+            },
+            singers:[],
         }
     },
     created() {
         this.sel(1)
+        this.selSonger();
     },
     mounted() {
         this.$nextTick(() => {
@@ -190,6 +204,15 @@ export default {
                     this.page.currentPage = res.data.data.current;
                 } else {
                     this.tableData = '';
+                }
+            })
+        },
+        selSonger(){
+            this.axios.get("/singer").then(res => {
+                if (res.data.code == 200) {
+                    this.singers = res.data.data;
+                } else {
+                    this.singers = [];
                 }
             })
         },
@@ -280,7 +303,6 @@ export default {
             console.log(row)
             this.updateVisible = true;
             this.updataData = JSON.parse(JSON.stringify(row));
-            ;
         },
         AddOneClick() {
             this.addOneVisible = true;
@@ -313,5 +335,7 @@ export default {
 </script>
 
 <style scoped>
-
+/*.el-select{*/
+/*    text-align: left;*/
+/*}*/
 </style>

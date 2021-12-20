@@ -77,7 +77,7 @@ public class GetMusicController {
                 .run();
     }
 
-
+    @ApiOperation("更新音乐路径")
     @GetMapping("/updataSong")
     public void getSongIds(){
         int i=0;
