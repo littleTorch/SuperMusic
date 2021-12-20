@@ -8,6 +8,8 @@ module.exports = {
         proxy: {
                '/api': {
                 target: 'http://localhost:8080',
+                   //公网地址
+                   // http://sm2.v.frp.fit，
                 // 允许跨域
                 changeOrigin: true,
                    // ws: true,
