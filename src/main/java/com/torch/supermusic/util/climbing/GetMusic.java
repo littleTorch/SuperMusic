@@ -22,6 +22,7 @@ import com.torch.supermusic.service.ISongService;
 import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.Site;
 import us.codecraft.webmagic.processor.PageProcessor;
+
 import java.util.*;
 
 public class GetMusic implements PageProcessor {
@@ -33,7 +34,7 @@ public class GetMusic implements PageProcessor {
         this.singerService = singerService;
     }
 
-    static String URL="http://localhost:3000/";
+    static String URL = "http://localhost:3000/";
     private IPlaylistService playlistService;
     private IPlaylistSongService playlistSongService;
     private ISongService songService;
@@ -45,36 +46,36 @@ public class GetMusic implements PageProcessor {
     @Override
     // process是定制爬虫逻辑的核心接口，在这里编写抽取逻辑
     public void process(Page page) {
-        StringBuilder musicids=null;
-        String thisUrl=page.getRequest().getUrl();
+        StringBuilder musicids = null;
+        String thisUrl = page.getRequest().getUrl();
         String thisId = ReUtil.get("\\d{1,15}$", thisUrl, 0);
         System.out.println(thisUrl);
 //        获取排行榜列表
-        if (thisUrl.contains("toplist")){
-        List<String> alllist = page.getJson().jsonPath("$.list[*]").all();
+        if (thisUrl.contains("toplist")) {
+            List<String> alllist = page.getJson().jsonPath("$.list[*]").all();
 //        取出需要的数据
-        for (String s : alllist) {
-            PlayList parse =JSON.parseObject(s,PlayList.class);
-            page.addTargetRequest(URL+"playlist/track/all?id="+parse.getId());
-            System.out.println(parse);
+            for (String s : alllist) {
+                PlayList parse = JSON.parseObject(s, PlayList.class);
+                page.addTargetRequest(URL + "playlist/track/all?id=" + parse.getId());
+                System.out.println(parse);
 //            将歌单写入数据库
-            Playlist playlist = new Playlist();
-            playlist.setId(parse.getId());
-            playlist.setPlaylistName(parse.getName());
-            playlist.setIcon(parse.getCoverImgUrl());
-            playlist.setPlaylistComment(parse.getDescription());
-            playlist.setPlaylistType(1);
-            playlistService.save(playlist);
-        }
+                Playlist playlist = new Playlist();
+                playlist.setId(parse.getId());
+                playlist.setPlaylistName(parse.getName());
+                playlist.setIcon(parse.getCoverImgUrl());
+                playlist.setPlaylistComment(parse.getDescription());
+                playlist.setPlaylistType(1);
+                playlistService.save(playlist);
+            }
         }
 //      获取歌单里的歌曲列表
-        if (thisUrl.contains("playlist/track/all")){
-            musicids=new StringBuilder();
+        if (thisUrl.contains("playlist/track/all")) {
+            musicids = new StringBuilder();
             List<String> allmusic = page.getJson().jsonPath("$.songs[*]").all();
             for (String s : allmusic) {
                 MusicList musicList = JSON.parseObject(s, MusicList.class);
                 System.out.println(musicList);
-                musicids.append(","+musicList.getId());
+                musicids.append("," + musicList.getId());
                 //歌单歌曲表
                 PlaylistSong playlistSong = new PlaylistSong();
                 playlistSong.setPlaylistId(Long.parseLong(thisId));
@@ -86,14 +87,15 @@ public class GetMusic implements PageProcessor {
                 song.setSingerId(musicList.getAr().get(0).getId());
                 song.setName(musicList.getName());
                 song.setPictureUrl(musicList.getAl().getPicUrl());
+                song.setComment("0");
                 songService.save(song);
-                page.addTargetRequest(URL+"artist/detail?id="+song.getSingerId());
+                page.addTargetRequest(URL + "artist/detail?id=" + song.getSingerId());
             }
             musicids.deleteCharAt(0);
-            page.addTargetRequest(URL+"song/url?id="+musicids);
+            page.addTargetRequest(URL + "song/url?id=" + musicids);
         }
         //获取歌曲url
-        if (thisUrl.contains("song/url")){
+        if (thisUrl.contains("song/url")) {
             List<String> allMusicUrl = page.getJson().jsonPath("$.data[*]").all();
             for (String s : allMusicUrl) {
                 MusicUrl musicUrl = JSON.parseObject(s, MusicUrl.class);
@@ -101,15 +103,15 @@ public class GetMusic implements PageProcessor {
                 Song song = new Song();
                 song.setId(musicUrl.getId());
                 song.setSongUrl(musicUrl.getUrl());
-                if (song.getSongUrl()==null){
+                if (song.getSongUrl()=="") {
                     songService.removeById(song.getId());
-                    playlistSongService.remove(new QueryWrapper<PlaylistSong>().eq("song_id",song.getId()));
-                }else{
+                    playlistSongService.remove(new QueryWrapper<PlaylistSong>().eq("id", song.getId()));
+                } else {
                     songService.updateById(song);
                 }
             }
         }
-        if (thisUrl.contains("artist/detail")){
+        if (thisUrl.contains("artist/detail")) {
             Artist artist = JSONUtil.toBean(page.getJson().jsonPath("$.data.artist").get(), Artist.class);
             Singer singer = new Singer();
             singer.setId(artist.getId());
@@ -117,8 +119,29 @@ public class GetMusic implements PageProcessor {
             singer.setProfile(artist.getBriefDesc());
             singer.setSingerName(artist.getName());
             singerService.save(singer);
+            //根据歌手查找歌曲
+            page.addTargetRequest(URL + "artist/top/song?id=" + singer.getId());
         }
-
+        if (thisUrl.contains("artist/top/song")) {
+            musicids = new StringBuilder();
+            List<String> allmusic = page.getJson().jsonPath("$.songs[*]").all();
+            for (String s : allmusic) {
+                MusicList musicList = JSON.parseObject(s, MusicList.class);
+                //歌曲表
+                if (songService.count(new QueryWrapper<Song>().eq("id", musicList.getId())) == 0) {
+                    musicids.append("," + musicList.getId());
+                    Song song = new Song();
+                    song.setId(musicList.getId());
+                    song.setSingerId(musicList.getAr().get(0).getId());
+                    song.setName(musicList.getName());
+                    song.setPictureUrl(musicList.getAl().getPicUrl());
+                    song.setComment("0");
+                    songService.save(song);
+                }
+            }
+            musicids.deleteCharAt(0);
+            page.addTargetRequest(URL + "song/url?id=" + musicids);
+        }
     }
 
     @Override
