@@ -52,5 +52,8 @@ public class Song implements Serializable {
     @TableField("comment")
     private String comment;
 
+    @ApiModelProperty(value = "歌手")
+    @TableField(exist = false)
+    private Singer singer;
 
 }

@@ -3,6 +3,7 @@ package com.torch.supermusic.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.torch.supermusic.service.ISingerService;
 import com.torch.supermusic.util.argEntity.SelectAndPage;
 import com.torch.supermusic.entity.Song;
 import com.torch.supermusic.service.ISongService;
@@ -15,6 +16,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
+import java.util.List;
 
 
 /**
@@ -33,6 +35,9 @@ public class SongController {
     @Autowired
     private ISongService songService;
 
+    @Autowired
+    private ISingerService singerService;
+
     @PreAuthorize("hasRole('NORMAL')")
     @ApiOperation("查询全部歌曲")
     @GetMapping()
@@ -40,12 +45,25 @@ public class SongController {
         return ResultUtils.success("查询成功",songService.list());
     }
 
+    //@PreAuthorize("hasRole('NORMAL')")
+    //@ApiOperation("根据歌曲名查询歌曲分页")
+    //@GetMapping("/page")
+    //public ResultVo PageSong(SelectAndPage selectAndPage){
+    //    return ResultUtils.success("查询成功", songService.page(new Page<Song>(selectAndPage.getCurrentPage(), selectAndPage.getPageSize()),new QueryWrapper<Song>().like("name",selectAndPage.getArg())));
+    //}
+
+
     @PreAuthorize("hasRole('NORMAL')")
     @ApiOperation("根据歌曲名查询歌曲分页")
     @GetMapping("/page")
-    public ResultVo PageSong(SelectAndPage selectAndPage){
-        return ResultUtils.success("查询成功", songService.page(new Page<Song>(selectAndPage.getCurrentPage(), selectAndPage.getPageSize()),new QueryWrapper<Song>().like("name",selectAndPage.getArg())));
+    public ResultVo PageSongAndSinger(SelectAndPage selectAndPage){
+        Page<Song> songPage = songService.page(new Page<Song>(selectAndPage.getCurrentPage(), selectAndPage.getPageSize()), new QueryWrapper<Song>().like("name", selectAndPage.getArg()));
+        for (Song record : songPage.getRecords()) {
+            record.setSinger(singerService.getById(record.getSingerId()));
+        }
+        return ResultUtils.success("查询成功", songPage);
     }
+
 
     @PreAuthorize("hasRole('ADMIN')")
     @ApiOperation("更新歌曲")
@@ -68,7 +86,7 @@ public class SongController {
         return songService.removeByIds(Arrays.asList(ids)) ? ResultUtils.success("删除成功") : ResultUtils.success("删除失败") ;
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('NORMAL')")
     @ApiOperation("查询歌手")
     @GetMapping("/singerByid/{id}")
     public ResultVo selectSingerId(@PathVariable("id") Long singerId){
