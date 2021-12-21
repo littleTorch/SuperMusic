@@ -17,7 +17,7 @@
         <div class="con">
           <div class="block" v-for="item of singerData" @click="clickSinger(item)">
             <el-avatar shape="circle" :size="120"  :src="item.icon"></el-avatar>
-            <span>{{item.singerName}}</span>
+            <p>{{item.singerName}}</p>
             <!--          <a v-bind:href='axios.get("/singer")'>{{singerData}}</a>-->
           </div>
         </div>
@@ -114,9 +114,12 @@
     min-width:900px;
     height: 100%;
   }
+  .singerBox{
+    background-color: #E9EEF3;
+  }
   .el-main {
 
-    background-color: #E9EEF3;
+    
     color: #333;
     padding: 0;
   }

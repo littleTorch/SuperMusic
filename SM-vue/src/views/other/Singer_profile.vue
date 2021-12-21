@@ -4,14 +4,15 @@
             <el-container>
                 <el-aside>
                     <div class="block2">
+                        <p id="b-top"></p>
                         <el-avatar shape="square" :size="100" :src="singer.icon"></el-avatar>
                         <p>{{singer.singerName}}</p>
-                        <p>{{singer.profile}}</p>
+                        <p id="b-span">{{singer.profile}}</p>
 
                     </div>
                 </el-aside>
                 <el-main>
-                    {{song}}
+                    <allsong :songList="song"/>
                 </el-main>
             </el-container>
         </div>
@@ -22,11 +23,13 @@
 </template>
 
 <script>
+import allsong from '../../components/Singer_profile/allsong.vue'
     export default {
+  components: { allsong },
         data() {
             return{
                 singer: "",
-                song: ""
+                song:[]
             }
         },
         created() {
@@ -48,28 +51,37 @@
     }
 </script>
 
-<style scoped>
+<style >
 
     .el-aside {
-        background-color: #D3DCE6;
-        color: #333;
-        text-align: center;
-        line-height: 200px;
+      
+    
     }
 
-    .block {
-        height: 300px;
-        line-height: 300px;
+    .block2 {
+       background: rgba(243, 243, 243, 0.5);
+       height: 100%;
+       text-align: center;
+       overflow: hidden;
     }
-
-    .el-main {
-        background-color: #E9EEF3;
-        color: #333;
-        text-align: center;
-        line-height: 160px;
+    #b-top{
+        height: 20px;
+        width: auto;
+    }
+   .block2 p{
+       margin-top: 20px;
+    }
+    #b-span{
+    text-indent:2em;
+    text-align: left;
+    }
+    .singerMain1{
+        display: flex;
+        justify-content: center;
     }
 .singerCon2{
-
+    width: 1200px;
+    min-height: 900px;
 }
 
 </style>
