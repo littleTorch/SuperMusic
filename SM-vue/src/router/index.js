@@ -62,6 +62,10 @@ const routes = [
         path: 'PlaylistSet',
         name: 'PlaylistSet',
         component: () => import('../views/admin/PlaylistSet.vue')
+      }, {
+        path: 'SonglistSet',
+        name: 'SonglistSet',
+        component: () => import('../views/admin/SonglistSet.vue')
       },{
         path: 'UserSet',
         name: 'UserSet',

@@ -4,7 +4,7 @@
         <el-form :model="select" label-width="80px">
             <el-row>
                 <el-col :span="5">
-                    <el-form-item label="排行榜名:">
+                    <el-form-item label="歌单名:">
                         <el-input v-model="select.playListName" placeholder="请输入内容"></el-input>
                     </el-form-item>
                 </el-col>
@@ -30,9 +30,9 @@
             style="width: 100%"
             tooltip-effect="dark">
             <el-table-column align="center" type="selection"></el-table-column>
-            <el-table-column align="center" prop="playlistName" label="排行榜名" show-overflow-tooltip></el-table-column>
-            <el-table-column align="center" prop="playlistComment" label="排行榜描述" show-overflow-tooltip></el-table-column>
-            <el-table-column align="center" prop="icon" label="图片路径" show-overflow-tooltip></el-table-column>
+            <el-table-column align="center" prop="playlistName" label="歌单名" show-overflow-tooltip></el-table-column>
+            <el-table-column align="center" prop="playlistComment" label="歌单描述" show-overflow-tooltip></el-table-column>
+            <el-table-column align="center" prop="icon" label="歌单图片路径" show-overflow-tooltip></el-table-column>
             <el-table-column label="操作" width="250" align="center">
                 <template slot-scope="scope">
                     <el-button @click="details(scope.row)" type="primary" size="mini">详情</el-button>
@@ -58,19 +58,19 @@
             layout="total, prev, pager, next"
         ></el-pagination>
 
-        <el-dialog title="新增排行榜" :visible.sync="addOneVisible" width="40%">
+        <el-dialog title="新增歌单" :visible.sync="addOneVisible" width="40%">
             <el-form
                 style="text-align:center"
                 :model="addOneForm"
                 label-width="150px"
             >
-                <el-form-item label="排行榜名：">
+                <el-form-item label="歌单名：">
                     <el-input v-model="addOneForm.playlistName" placeholder=""></el-input>
                 </el-form-item>
-                <el-form-item label="排行榜描述：">
+                <el-form-item label="歌单描述：">
                     <el-input type="textarea" autosize v-model="addOneForm.playlistComment" placeholder=""></el-input>
                 </el-form-item>
-                <el-form-item label="排行榜图片路径：">
+                <el-form-item label="歌单图片路径：">
                     <el-input v-model="addOneForm.icon" placeholder=""></el-input>
                 </el-form-item>
             </el-form>
@@ -80,19 +80,19 @@
                       </span>
         </el-dialog>
 
-        <el-dialog title="修改排行榜" :visible.sync="updateVisible" width="40%">
+        <el-dialog title="修改歌单" :visible.sync="updateVisible" width="40%">
             <el-form
                 style="text-align:center"
                 :model="updataData"
                 label-width="150px"
             >
-                <el-form-item label="排行榜名：">
+                <el-form-item label="歌单名：">
                     <el-input v-model="updataData.playlistName" placeholder=""></el-input>
                 </el-form-item>
-                <el-form-item label="排行榜描述：">
+                <el-form-item label="歌单描述：">
                     <el-input type="textarea" autosize v-model="updataData.playlistComment" placeholder=""></el-input>
                 </el-form-item>
-                <el-form-item label="排行榜图片路径：">
+                <el-form-item label="歌单图片路径：">
                     <el-input v-model="updataData.icon" placeholder=""></el-input>
                 </el-form-item>
             </el-form>
@@ -102,20 +102,20 @@
               </span>
         </el-dialog>
 
-        <el-dialog title="排行榜详情" :visible.sync="detailsVisible" width="40%">
+        <el-dialog title="歌单详情" :visible.sync="detailsVisible" width="40%">
             <el-form
                 style="text-align:center"
                 :model="detailsData"
                 label-width="150px"
                 disabled
             >
-                <el-form-item label="排行榜名：">
+                <el-form-item label="歌单名：">
                     <el-input v-model="detailsData.playlistName" placeholder=""></el-input>
                 </el-form-item>
-                <el-form-item label="排行榜描述：">
+                <el-form-item label="歌单描述：">
                     <el-input type="textarea" autosize v-model="detailsData.playlistComment" placeholder=""></el-input>
                 </el-form-item>
-                <el-form-item label="排行榜图片路径：">
+                <el-form-item label="歌单图片路径：">
                     <el-input v-model="detailsData.icon" placeholder=""></el-input>
                 </el-form-item>
             </el-form>
@@ -151,7 +151,7 @@ export default {
                 playlistName: '',
                 playlistComment: '',
                 icon: '',
-                playlistType:'1',
+                playlistType:'0',
             }
         }
     },
@@ -168,7 +168,7 @@ export default {
             this.axios.get("playlist/page", {
                 params: {
                     arg: this.select.playListName,
-                    arg2: "1",
+                    arg2: "0",
                     pageSize: this.page.pageSize,
                     currentPage: pageNo,
                 }

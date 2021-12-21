@@ -19,7 +19,7 @@
                 <el-menu-item index="PlaylistSet">
                     <span slot="title">排行榜管理</span>
                 </el-menu-item>
-                <el-menu-item index="/">
+                <el-menu-item index="SonglistSet">
                     <span slot="title">歌单管理</span>
                 </el-menu-item>
                 <el-menu-item index="UserSet">
