@@ -54,11 +54,11 @@ const routes = [
         path: 'SongSet',
         name: 'SongSet',
         component: () => import('../views/admin/SongSet.vue')
-      },{
+      }, {
         path: 'SingSet',
         name: 'SingSet',
         component: () => import('../views/admin/SingSet.vue')
-      },{
+      }, {
         path: 'PlaylistSet',
         name: 'PlaylistSet',
         component: () => import('../views/admin/PlaylistSet.vue')
@@ -66,7 +66,7 @@ const routes = [
         path: 'SonglistSet',
         name: 'SonglistSet',
         component: () => import('../views/admin/SonglistSet.vue')
-      },{
+      }, {
         path: 'UserSet',
         name: 'UserSet',
         component: () => import('../views/admin/UserSet.vue')
@@ -89,13 +89,8 @@ const routes = [
   {
     path: '/RankingList',
     name: 'RankingList',
-    component: () => import('../views/other/RankingList.vue'),
-    children: [{
-      path: 'ListPage/:id',
-      name: 'ListPage',
-      component: () => import('../views/other/ListPage'),
-      props: true
-    }],
+    component: () => import('../views/other/RankingList.vue')
+
   },
   {
     path: '/Singer',
@@ -106,7 +101,6 @@ const routes = [
   {
     path: '/Singer_profile',
     name: 'Singer_profile',
-
     component: () => import('../views/other/Singer_profile.vue'),
   },
   {

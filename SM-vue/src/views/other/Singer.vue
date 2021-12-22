@@ -15,7 +15,7 @@
       </el-header>
       <el-main class="singerBox">
         <div class="con">
-          <div class="block" v-for="item of singerData" @click="clickSinger(item)">
+          <div class="block" v-for="(item,index) of singerData" :key="index" @click="clickSinger(item)">
             <el-avatar shape="circle" :size="120"  :src="item.icon"></el-avatar>
             <p>{{item.singerName}}</p>
             <!--          <a v-bind:href='axios.get("/singer")'>{{singerData}}</a>-->
