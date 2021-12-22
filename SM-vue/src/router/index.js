@@ -75,6 +75,12 @@ const routes = [
     ]
   },
   {
+    //页面找不到
+    path: '*',
+    name: 'NotFound',
+    component: () => import('../views/NotFound'),
+  },
+  {
     path: '/mySongSheet',
     name: 'mySongSheet',
 
@@ -83,8 +89,13 @@ const routes = [
   {
     path: '/RankingList',
     name: 'RankingList',
-
     component: () => import('../views/other/RankingList.vue'),
+    children: [{
+      path: 'ListPage/:id',
+      name: 'ListPage',
+      component: () => import('../views/other/ListPage'),
+      props: true
+    }],
   },
   {
     path: '/Singer',

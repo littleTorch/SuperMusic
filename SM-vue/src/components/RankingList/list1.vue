@@ -4,20 +4,22 @@
  <div class="rankingList1">
         <h3>云音乐特色榜</h3>
         <ul>
-          <li><a href="#" class="listBox1" v-for="(item,index) in mylistL" :key="index">
-               <div class="listBox2">
-                 
-      <img 
-      :src="item.icon" 
-      alt="" 
-       class="el-img1">
-      <div class="listText1">
-        <p class="text2">{{item.playlistName}}</p>
-        <p class="text1">{{item.playlistComment}}</p>
-      </div>
-               </div>
-            </a></li>
-  
+          <li>
+              <a href="#" class="listBox1" v-for="(item,index) in mylistL" :key="index" @click="replaceDoc(item.id)">
+                  <div class="listBox2">
+                      <router-link :to="{name: 'ListPage',  params: {id: item.id}}">
+                      <img
+                      :src="item.icon"
+                      alt=""
+                       class="el-img1">
+                      <div class="listText1">
+                              <p class="text2">{{item.playlistName}}</p>
+                              <p class="text1">{{item.playlistComment}}</p>
+                      </div>
+                      </router-link>
+                  </div>
+            </a>
+          </li>
         </ul>
     </div>
   
@@ -40,7 +42,10 @@ export default {
     }
     ,
     methods:{
-    
+        replaceDoc(id)
+        {
+            window.location.replace("http://localhost/RankingList/ListPage/"+id)
+        }
     },  created(){
   },
 }
