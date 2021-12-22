@@ -23,9 +23,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * <p>
@@ -129,5 +127,27 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         } else {
             return "验证码错误";
         }
+    }
+
+    @Override
+    public boolean updateOne(User user) {
+        Boolean flag=true;
+        try {
+            Map<String, Object> map = new HashMap<>();
+            map.put("user_id",user.getId());
+            userRoleService.removeByMap(map);
+            updateById(user);
+            for (Role role : user.getRoles()) {
+                UserRole userRole = new UserRole();
+                userRole.setUserId(user.getId());
+                userRole.setRoleId(role.getId());
+                userRoleService.save(userRole);
+            }
+        } catch (Exception e) {
+            flag=false;
+            e.printStackTrace();
+        } finally {
+        }
+        return flag;
     }
 }

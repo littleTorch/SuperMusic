@@ -27,7 +27,7 @@ import java.util.List;
 
 /**
  * <p>
- *  前端控制器
+ * 前端控制器
  * </p>
  *
  * @author Torch
@@ -49,14 +49,13 @@ public class UserController {
 
     @ApiOperation("获取邮件验证码")
     @GetMapping("/getcode")
-    public ResultVo getCode(String mail){
+    public ResultVo getCode(String mail) {
         return ResultUtils.success(userService.sendmail(mail));
     }
 
     @ApiOperation("注册")
     @PostMapping("/register")
-    public ResultVo register(@RequestBody Register register){
-        System.out.println(register);
+    public ResultVo register(@RequestBody Register register) {
         return ResultUtils.success(userService.register(register));
     }
 
@@ -64,11 +63,11 @@ public class UserController {
     @PreAuthorize("hasRole('ADMIN')")
     @ApiOperation("根据用户名查询用户分页")
     @GetMapping("/page")
-    public ResultVo PageSongAndSinger(SelectAndPage selectAndPage){
+    public ResultVo PageSongAndSinger(SelectAndPage selectAndPage) {
         Page<User> page = userService.page(new Page<User>(selectAndPage.getCurrentPage(), selectAndPage.getPageSize()), new QueryWrapper<User>().like("username", selectAndPage.getArg()));
         for (User user : page.getRecords()) {
             List<UserRole> userRoles = userRoleService.list(new QueryWrapper<UserRole>().eq("user_id", user.getId()));
-            if (userRoles.size()!=0) {
+            if (userRoles.size() != 0) {
                 ArrayList<Integer> roleIds = new ArrayList<>();
                 for (UserRole userRole : userRoles) {
                     roleIds.add(userRole.getRoleId());
@@ -82,31 +81,37 @@ public class UserController {
     @PreAuthorize("hasRole('ADMIN')")
     @ApiOperation("更新用户")
     @PutMapping("/updata")
-    public ResultVo updata(@RequestBody User user){
-        if (!(user.getPassword()).equals(userService.getById(user.getId()).getPassword())){
+    public ResultVo updata(@RequestBody User user) {
+        if (!(user.getPassword()).equals(userService.getById(user.getId()).getPassword())) {
             user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
         }
-        return userService.updateById(user)? ResultUtils.success("修改成功"):ResultUtils.error("修改失败");
+        if (!userService.getById(user).getUsername().equals(user.getUsername())) {
+            if (userService.count(new QueryWrapper<User>().eq("username", user.getUsername())) == 1) {
+                return ResultUtils.error("用户名已存在！");
+            }
+        }
+        return userService.updateOne(user) ? ResultUtils.success("修改成功") : ResultUtils.error("修改失败");
     }
 
     @PreAuthorize("hasRole('ADMIN')")
     @ApiOperation("添加用户")
     @PostMapping("/add")
-    public ResultVo add(@RequestBody User user){
+    public ResultVo add(@RequestBody User user) {
+        if (userService.count(new QueryWrapper<User>().eq("username", user.getUsername())) >= 1) {
+            return ResultUtils.error("用户名已存在！");
+        }
         user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
-        userService.save(user);
         //将userid和roleid交给用户角色类去添加数据
-        //待写！！！！！！！！！！！！
-        return false? ResultUtils.success("添加成功"):ResultUtils.error("添加失败");
+        return userService.save(user) && userRoleService.saveAll(user.getId(), user.getRoles()) ? ResultUtils.success("添加成功") : ResultUtils.error("添加失败");
     }
 
     @PreAuthorize("hasRole('ADMIN')")
     @ApiOperation("删除用户")
     @DeleteMapping(value = "/dels")
-    public ResultVo delete(@RequestBody String[] ids){
+    public ResultVo delete(@RequestBody String[] ids) {
         for (String id : ids) {
             userRoleService.remove(new QueryWrapper<UserRole>().eq("user_id", id));
         }
-        return userService.removeByIds(Arrays.asList(ids)) ? ResultUtils.success("删除成功") : ResultUtils.success("删除失败") ;
+        return userService.removeByIds(Arrays.asList(ids)) ? ResultUtils.success("删除成功") : ResultUtils.success("删除失败");
     }
 }

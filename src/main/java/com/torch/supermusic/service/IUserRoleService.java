@@ -1,7 +1,10 @@
 package com.torch.supermusic.service;
 
+import com.torch.supermusic.entity.Role;
 import com.torch.supermusic.entity.UserRole;
 import com.baomidou.mybatisplus.extension.service.IService;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +16,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IUserRoleService extends IService<UserRole> {
 
+    Boolean saveAll(Integer id, List<Role> roles);
 }

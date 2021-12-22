@@ -17,4 +17,6 @@ public interface IUserService extends IService<User> {
     String sendmail(String mail);
 
     String register(Register register);
+
+    boolean updateOne(User user);
 }
