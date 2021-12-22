@@ -1,12 +1,13 @@
 package com.torch.supermusic.controller;
 
 
-import cn.hutool.crypto.BCUtil;
+import cn.hutool.core.collection.IterUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.torch.supermusic.entity.Song;
+import com.torch.supermusic.entity.Role;
 import com.torch.supermusic.entity.User;
 import com.torch.supermusic.entity.UserRole;
+import com.torch.supermusic.service.IRoleService;
 import com.torch.supermusic.service.IUserRoleService;
 import com.torch.supermusic.service.IUserService;
 import com.torch.supermusic.util.argEntity.Register;
@@ -20,7 +21,9 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * <p>
@@ -41,6 +44,9 @@ public class UserController {
     @Autowired
     private IUserRoleService userRoleService;
 
+    @Autowired
+    private IRoleService roleService;
+
     @ApiOperation("获取邮件验证码")
     @GetMapping("/getcode")
     public ResultVo getCode(String mail){
@@ -60,6 +66,16 @@ public class UserController {
     @GetMapping("/page")
     public ResultVo PageSongAndSinger(SelectAndPage selectAndPage){
         Page<User> page = userService.page(new Page<User>(selectAndPage.getCurrentPage(), selectAndPage.getPageSize()), new QueryWrapper<User>().like("username", selectAndPage.getArg()));
+        for (User user : page.getRecords()) {
+            List<UserRole> userRoles = userRoleService.list(new QueryWrapper<UserRole>().eq("user_id", user.getId()));
+            if (userRoles.size()!=0) {
+                ArrayList<Integer> roleIds = new ArrayList<>();
+                for (UserRole userRole : userRoles) {
+                    roleIds.add(userRole.getRoleId());
+                }
+                user.setRoles(roleService.listByIds(roleIds));
+            }
+        }
         return ResultUtils.success("查询成功", page);
     }
 
@@ -78,7 +94,10 @@ public class UserController {
     @PostMapping("/add")
     public ResultVo add(@RequestBody User user){
         user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
-        return userService.save(user)? ResultUtils.success("添加成功"):ResultUtils.error("添加失败");
+        userService.save(user);
+        //将userid和roleid交给用户角色类去添加数据
+        //待写！！！！！！！！！！！！
+        return false? ResultUtils.success("添加成功"):ResultUtils.error("添加失败");
     }
 
     @PreAuthorize("hasRole('ADMIN')")

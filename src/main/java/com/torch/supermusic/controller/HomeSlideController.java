@@ -4,6 +4,7 @@ import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.lang.UUID;
 import com.torch.supermusic.util.result.ResultUtils;
 import com.torch.supermusic.util.result.ResultVo;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +25,7 @@ import java.util.ArrayList;
  * @author Torch
  * @since 2021-12-14
  */
+@Api(tags = {"首页轮播图类"})
 @RestController
 @RequestMapping("/home-slide")
 public class HomeSlideController {
@@ -56,7 +58,7 @@ public class HomeSlideController {
         return ResultUtils.error("文件为空！");
     }
 
-    @ApiOperation("获取图片列表")
+    @ApiOperation("获取轮播图片列表")
     @PreAuthorize("hasRole('NORMAL')")
     @GetMapping("/getImgsUrl")
     public ResultVo getImg() {

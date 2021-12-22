@@ -89,6 +89,11 @@
                 <el-form-item label="邮箱:" prop="email">
                     <el-input v-model="addOneForm.email"></el-input>
                 </el-form-item>
+                <el-form-item label="用户角色:" v-if="addOneForm">
+                    <el-checkbox-group v-model="addOneForm.roles">
+                        <el-checkbox v-for="item in roles" :label="item.id">{{item.name}}</el-checkbox>
+                    </el-checkbox-group>
+                </el-form-item>
             </el-form>
             <span slot="footer" class="dialog-footer">
                         <el-button @click="addOneVisible = false">取 消</el-button>
@@ -121,6 +126,11 @@
                 </el-form-item>
                 <el-form-item label="邮箱:" prop="email">
                     <el-input v-model="updataData.email"></el-input>
+                </el-form-item>
+                <el-form-item label="用户角色:" v-if="updataData">
+                    <el-checkbox-group v-model="updataData.roles">
+                        <el-checkbox v-for="item in roles" :label="item.id">{{item.name}}</el-checkbox>
+                    </el-checkbox-group>
                 </el-form-item>
             </el-form>
             <span slot="footer" class="dialog-footer">
@@ -155,6 +165,11 @@
                 </el-form-item>
                 <el-form-item label="邮箱:" prop="email">
                     <el-input v-model="detailsData.email"></el-input>
+                </el-form-item>
+                <el-form-item label="用户角色:" v-if="detailsData">
+                    <el-checkbox-group v-model="detailsData.roles">
+                        <el-checkbox v-for="item in roles" :label="item.id">{{item.name}}</el-checkbox>
+                    </el-checkbox-group>
                 </el-form-item>
             </el-form>
             <span slot="footer" class="dialog-footer">
@@ -193,13 +208,15 @@ export default {
                 nickname: '',
                 sex: 0,
                 email: '',
+                roles:[],
             },
-            singers: [],
+            roles: [],
+            hasRoles:[],
         }
     },
     created() {
         this.sel(1)
-        this.selSonger();
+        this.selRoles();
     },
     mounted() {
         this.$nextTick(() => {
@@ -232,7 +249,17 @@ export default {
                 }
             })
         },
+        selRoles(){
+            this.axios.get("role").then(res => {
+                if (res.data.code == 200) {
+                    this.roles = res.data.data;
+                } else {
+                    this.roles = '';
+                }
+            })
+        },
         addOne() {
+            this.changeRolesIdToRoles(this.addOneForm);
             this.axios.post("user/add", JSON.stringify(this.addOneForm)).then(res => {
                 if (res.data.code == 200) {
                     this.addOneVisible = false;
@@ -253,7 +280,7 @@ export default {
             })
         },
         setOne() {
-            console.log(JSON.stringify(this.updataData))
+            this.changeRolesIdToRoles(this.updataData);
             this.axios.put("user/updata", JSON.stringify(this.updataData)).then(res => {
                 if (res.data.code == 200) {
                     this.updateVisible = false;
@@ -313,14 +340,14 @@ export default {
         },
         updateClick(row) {
             this.updateVisible = true;
-            this.updataData = JSON.parse(JSON.stringify(row));
+            this.updataData = this.changeRolesToRolesId(JSON.parse(JSON.stringify(row)));
         },
         AddOneClick() {
             this.addOneVisible = true;
         },
         details(row) {
             this.detailsVisible = true;
-            this.detailsData = row;
+            this.detailsData = this.changeRolesToRolesId(JSON.parse(JSON.stringify(row)));
         },
         //表格前的复选框点击事件
         handleSelectionChange(val) {
@@ -334,6 +361,34 @@ export default {
         handleCurrentChange(val) {
             this.sel(val)
         },
+        //将roles[*,*,{id}]变为rolesId[id]
+        changeRolesToRolesId(row){
+            if (row.roles==null){
+                row.roles=[];
+            }
+            let rolesId=[];
+            row.roles.forEach(item=>{
+                rolesId.push(item.id)
+            });
+            row.roles=rolesId;
+            return row;
+        },
+        //将rolesId[id]变为roles[*,*,{id}]
+        changeRolesIdToRoles(row){
+
+            if (row.roles==null){
+                row.roles=[];
+            }
+            let role=[];
+            row.roles.forEach(item=>{
+                role.push({
+                        id: item,
+                    })
+            })
+            row.roles=role;
+            console.log(row)
+            return row;
+        }
     }
 }
 </script>
