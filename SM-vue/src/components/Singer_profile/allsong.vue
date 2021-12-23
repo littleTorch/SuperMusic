@@ -62,7 +62,7 @@ export default {
   float: left;
 }
 .songerImg img{
-
+    height: 100%;
     width: 100%;
 }
 .songerBox span,.songerBox p{
