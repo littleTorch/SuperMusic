@@ -142,9 +142,9 @@ export default {
             //获取当前链接用正则匹配出服务器地址再拼接上去
             // let urlhead=str.match(/^.*[a-zA-Z0-9][-a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-a-zA-Z0-9]{0,62})+\.?/)[0];
             //挂到公网上使用
-            // this.detailsData = "http://sm2.v.frp.fit/home-slide/showImg?imgUrl="+row.imgName;
+            this.detailsData = "http://sm2.v.frp.fit/home-slide/showImg?imgUrl="+row.imgName;
             //本地开发使用
-            this.detailsData = "http://localhost:8080/home-slide/showImg?imgUrl="+row.imgName;
+            // this.detailsData = "http://localhost:8080/home-slide/showImg?imgUrl="+row.imgName;
         },
         //表格前的复选框点击事件
         handleSelectionChange(val) {

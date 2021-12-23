@@ -3,6 +3,7 @@ package com.torch.supermusic.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.torch.supermusic.entity.Singer;
 import com.torch.supermusic.service.ISingerService;
 import com.torch.supermusic.util.argEntity.SelectAndPage;
 import com.torch.supermusic.entity.Song;
@@ -42,21 +43,32 @@ public class SongController {
     @ApiOperation("查询全部歌曲")
     @GetMapping()
     public ResultVo allSong(){
-        return ResultUtils.success("查询成功",songService.list());
+        List<Song> list = songService.list();
+        for (Song song : list) {
+            song.setSinger(singerService.getOne(new QueryWrapper<Singer>().eq("id",song.getSingerId())));
+        }
+        return ResultUtils.success("查询成功", list);
     }
 
-    //@PreAuthorize("hasRole('NORMAL')")
-    //@ApiOperation("根据歌曲名查询歌曲分页")
-    //@GetMapping("/page")
-    //public ResultVo PageSong(SelectAndPage selectAndPage){
-    //    return ResultUtils.success("查询成功", songService.page(new Page<Song>(selectAndPage.getCurrentPage(), selectAndPage.getPageSize()),new QueryWrapper<Song>().like("name",selectAndPage.getArg())));
-    //}
-
+    @PreAuthorize("hasRole('NORMAL')")
+    @ApiOperation("模糊查询全部歌曲")
+    @GetMapping("/like")
+    public ResultVo likeSong(SelectAndPage selectAndPage){
+        List<Song> list = songService.list(new QueryWrapper<Song>().like("name",selectAndPage.getArg()));
+        for (Song song : list) {
+            song.setSinger(singerService.getOne(new QueryWrapper<Singer>().eq("id",song.getSingerId())));
+        }
+        return ResultUtils.success("查询成功", list);
+    }
 
     @PreAuthorize("hasRole('NORMAL')")
     @ApiOperation("根据歌曲名查询歌曲分页")
     @GetMapping("/page")
     public ResultVo PageSongAndSinger(SelectAndPage selectAndPage){
+        long count = songService.count(new QueryWrapper<Song>().like("name", selectAndPage.getArg()));
+        if (count%selectAndPage.getPageSize()==0){
+            selectAndPage.setCurrentPage(selectAndPage.getCurrentPage()-1);
+        }
         Page<Song> songPage = songService.page(new Page<Song>(selectAndPage.getCurrentPage(), selectAndPage.getPageSize()), new QueryWrapper<Song>().like("name", selectAndPage.getArg()));
         for (Song record : songPage.getRecords()) {
             record.setSinger(singerService.getById(record.getSingerId()));
@@ -83,7 +95,7 @@ public class SongController {
     @ApiOperation("删除歌曲")
     @DeleteMapping(value = "/dels")
     public ResultVo delete(@RequestBody String[] ids){
-        return songService.removeByIds(Arrays.asList(ids)) ? ResultUtils.success("删除成功") : ResultUtils.success("删除失败") ;
+        return songService.removeByIds(Arrays.asList(ids)) ? ResultUtils.success("删除成功") : ResultUtils.error("删除失败") ;
     }
 
     @PreAuthorize("hasRole('NORMAL')")

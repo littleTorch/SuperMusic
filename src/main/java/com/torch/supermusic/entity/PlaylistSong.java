@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
+import java.util.List;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.models.auth.In;
@@ -38,6 +40,10 @@ public class PlaylistSong implements Serializable {
     @ApiModelProperty("歌单序号")
     @TableField("playlist_id")
     private Long playlistId;
+
+    @ApiModelProperty(value = "歌单歌曲id")
+    @TableField(exist = false)
+    private List<Long> songIds;
 
 
 }

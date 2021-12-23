@@ -91,7 +91,7 @@
                 </el-form-item>
                 <el-form-item label="用户角色:" v-if="addOneForm">
                     <el-checkbox-group v-model="addOneForm.roles">
-                        <el-checkbox v-for="item in roles" :label="item.id">{{item.name}}</el-checkbox>
+                        <el-checkbox v-for="(item,i) in roles" key="i" :label="item.id">{{item.name}}</el-checkbox>
                     </el-checkbox-group>
                 </el-form-item>
             </el-form>
@@ -129,7 +129,7 @@
                 </el-form-item>
                 <el-form-item label="用户角色:" v-if="updataData">
                     <el-checkbox-group v-model="updataData.roles">
-                        <el-checkbox v-for="item in roles" :label="item.id">{{item.name}}</el-checkbox>
+                        <el-checkbox v-for="(item,i) in roles" key="i" :label="item.id">{{item.name}}</el-checkbox>
                     </el-checkbox-group>
                 </el-form-item>
             </el-form>
@@ -168,7 +168,7 @@
                 </el-form-item>
                 <el-form-item label="用户角色:" v-if="detailsData">
                     <el-checkbox-group v-model="detailsData.roles">
-                        <el-checkbox v-for="item in roles" :label="item.id">{{item.name}}</el-checkbox>
+                        <el-checkbox v-for="(item,i) in roles" key="i" :label="item.id">{{item.name}}</el-checkbox>
                     </el-checkbox-group>
                 </el-form-item>
             </el-form>

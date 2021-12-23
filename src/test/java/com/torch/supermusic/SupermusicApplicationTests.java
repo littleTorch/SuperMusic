@@ -1,7 +1,10 @@
 package com.torch.supermusic;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.torch.supermusic.entity.Song;
 import com.torch.supermusic.entity.User;
 
+import com.torch.supermusic.service.ISongService;
 import com.torch.supermusic.service.IUserService;
 import com.torch.supermusic.util.SendEmail;
 import org.junit.jupiter.api.Test;
@@ -20,14 +23,18 @@ class SupermusicApplicationTests {
     @Autowired
     SendEmail sendEmail;
 
+    @Autowired
+    ISongService songService;
+
 
     @Test
     void contextLoads() {
-        User user = new User();
-        user.setId(2);
-        user.setUsername("admin");
-        user.setPassword(new BCryptPasswordEncoder().encode("123"));
-        userService.save(user);
+        //User user = new User();
+        //user.setId(2);
+        //user.setUsername("admin");
+        //user.setPassword(new BCryptPasswordEncoder().encode("123"));
+        //userService.save(user);
+        songService.removeByIds(songService.list(new QueryWrapper<Song>().isNull("song_url")));
     }
 
     @Test

@@ -56,6 +56,7 @@ public class GetMusicController {
                 .thread(20)
                 //启动爬虫
                 .run();
+        clearSong();
     }
 
 
@@ -94,7 +95,11 @@ public class GetMusicController {
         }
         musicids.deleteCharAt(0);
         updataSong("http://localhost:3000/song/url?id="+musicids);
+        clearSong();
     }
 
+    private void clearSong(){
+        songService.removeByIds(songService.list(new QueryWrapper<Song>().isNull("song_url")));
+    }
 
 }

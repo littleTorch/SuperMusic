@@ -110,12 +110,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 //一些不需要权限的请求
                 .antMatchers("/swagger-ui/**",
                         "/getmusic",
-                        "/updataSong",
-                        "/user/**",
                         "/v3/**",
                         "/swagger/**",
                         "/druid/**",
-                        "/login").permitAll()
+                        "/login",
+                        "/home-slide/showImg").permitAll()
                 //其他都需要权限
                 .anyRequest()
                 .authenticated()
