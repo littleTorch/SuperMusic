@@ -86,7 +86,7 @@ export default {
                         let res = response.data;
                         sessionStorage.setItem("token", res.data);
                         this.$message.success(response.data.msg);
-                        this.$router.go(-1);
+                        this.$router.push({path:"/"});
                     }else{
                         this.$message.error(response.data.msg);
                     }

@@ -15,9 +15,9 @@
                     
                         
                         <p>{{item.name}}</p>
-                        <i class="el-icon-video-play"></i>
+                        <i class="el-icon-video-play" @click="play(item)"></i>
                     </div>
-            
+
                 </a>
             </li>
         </ul>
@@ -30,6 +30,13 @@ export default {
         songList:{
             type:Array,
             required:true
+        }
+    },
+    inject: ['addSong'],
+    methods:{
+        play(item){
+            console.log("点击播放歌曲")
+            this.addSong(item);
         }
     }
 }
