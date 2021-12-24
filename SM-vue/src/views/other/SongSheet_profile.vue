@@ -40,7 +40,7 @@
         },
         methods: {
             songsheetprofile() {
-                this.songSheet=this.$route.query.dataObj;
+                this.songSheet=this.$route.params.id;
                 //songSheet：歌单详情。包括id,封面，歌单简介，歌单创建者，歌单名字，歌单标签，歌单类型（0普通歌单，1排行榜，2我的歌单）
                 // console.log(this.songSheet)
             },
