@@ -22,8 +22,22 @@ Vue.use(SlideVerify);
 axios.defaults.baseURL = "/api"
 Vue.config.productionTip = false
 
-
 Vue.use(infiniteScroll);
+//过滤器
+router.beforeEach((to, from, next) => {
+  //to 将要进入的路由
+  // from 将要离开的路由
+  // next 让路由继续执行
+  let token = sessionStorage.getItem("token");
+  console.log(token)
+  if (to.path === '/mainL/login'||to.path === '/mainL/register') {
+      next();
+  }else if(!token){
+    next({path:"/mainL/login"});
+  }
+    next();
+})
+
 
 axios.interceptors.request.use(config => {
   let token = sessionStorage.getItem("token");

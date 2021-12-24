@@ -1,81 +1,82 @@
 <template>
-  <div class="hello">
+    <div class="hello">
 
-    <div id="nav">
-      <div id="navigation">
-        <ul >
-          <li class="navImg">
-            <img src="../assets/logo.png" alt="">
-          </li>
-          <li>
-            <router-link exact to="/">首页</router-link>
-          </li>
-          <li>
-            <router-link to="/SongSheet">歌单</router-link>
-          </li>
-          <li>
-            <router-link to="/Singer">歌手</router-link>
-          </li>
-          <li>
-            <router-link to="/mySongSheet">我的歌单</router-link>
-          </li>
-          <li>
-            <router-link to="/RankingList">排行榜</router-link>
-          </li>
-          <li>
-            <router-link to="/Admin">管理员</router-link>
-          </li>
+        <div id="nav">
+            <div id="navigation">
+                <ul>
+                    <li class="navImg">
+                        <img src="../assets/logo.png" alt="">
+                    </li>
+                    <li>
+                        <router-link exact to="/">首页</router-link>
+                    </li>
+                    <li>
+                        <router-link to="/SongSheet">歌单</router-link>
+                    </li>
+                    <li>
+                        <router-link to="/Singer">歌手</router-link>
+                    </li>
+                    <li>
+                        <router-link to="/mySongSheet">我的歌单</router-link>
+                    </li>
+                    <li>
+                        <router-link to="/RankingList">排行榜</router-link>
+                    </li>
+                    <li>
+                        <router-link to="/Admin">管理员</router-link>
+                    </li>
 
 
-        </ul>
+                </ul>
 
-<div class="search">
-      
-  <el-input
-    placeholder="请输入内容"
-    prefix-icon="el-icon-search"
-    v-model="input1">
-  </el-input>
-</div>
+                <div class="search">
 
-<div id="navR">
+                    <el-input
+                        placeholder="请输入内容"
+                        prefix-icon="el-icon-search"
+                        v-model="input1">
+                    </el-input>
+                </div>
 
-    <el-dropdown trigger="click" >
-      <span class="el-dropdown-link">
-      个人中心
-      </span>
-      <el-dropdown-menu slot="dropdown"  class="dMenu">
-          <ul >
-            <li>
-              <router-link to="/mainL/login" > 登录</router-link>
-            </li>
-            <li>
-              <router-link to="/mainL/register">注册</router-link>
-            </li>
-          </ul>
-      </el-dropdown-menu>
-    </el-dropdown>
+                <div id="navR">
 
-</div>
+                    <el-dropdown @command="handleCommand">
+                        <span @click="toMy()" class="el-dropdown-link">
+                          个人中心
+                        </span>
+                        <el-dropdown-menu slot="dropdown" class="dMenu">
+                            <el-dropdown-item command="a">退出登录</el-dropdown-item>
+                        </el-dropdown-menu>
+                    </el-dropdown>
+                </div>
 
-      </div>
+            </div>
+        </div>
+
     </div>
-   
-  </div>
 </template>
 
 <script>
 export default {
-  name: 'HelloWorld',
+    name: 'HelloWorld',
     data() {
-    return {
-      input1: '',
-    
+        return {
+            input1: '',
+
+        }
+    },
+    props: {
+        msg: String
+    },
+    methods: {
+        handleCommand(command) {
+            sessionStorage.setItem("token","");
+            this.$router.push({path: "/mainL/login"})
+        },
+        toMy() {
+            this.$router.push({path: "/my"})
+        }
     }
-  },
-  props: {
-    msg: String
-  }
 }
 </script>
 
@@ -83,81 +84,91 @@ export default {
 <style scoped>
 
 ul {
-  list-style-type: none;
+    list-style-type: none;
 }
+
 li {
-  display: inline-block;
+    display: inline-block;
 }
+
 a {
-  color: #42b983;
+    color: #42b983;
 }
-.active{
+
+.active {
     background: rgba(134, 221, 205, 0.5);
-  }
-  /* 导航栏 */
-  #nav{
+}
+
+/* 导航栏 */
+#nav {
     width: 100%;
     height: 50px;
-  
-     background: rgba(243, 243, 243, 0.7);
+
+    background: rgba(243, 243, 243, 0.7);
     display: flex;
     justify-content: center;
-  }
-  #navigation{
+}
+
+#navigation {
     min-width: 900px;
     width: 1200px;
     height: 100%;
     display: flex;
     justify-content: space-between;
-  }
-  a:hover{
+}
+
+a:hover {
     background: rgba(240, 128, 128, 0.7)
-  }
-.navImg{
-  width: 120px;
-  height: 50px;
 }
-.navImg img{
-  width: 100%;
-  height: 100%;
+
+.navImg {
+    width: 120px;
+    height: 50px;
 }
-ul li{
-  float: left;
+
+.navImg img {
+    width: 100%;
+    height: 100%;
 }
-ul li a{
-  transition: all 0.5s;
-  display: block;
-  height: 50px;
-  line-height: 50px;
-  padding: 0 15px;
+
+ul li {
+    float: left;
 }
-.search{
-  line-height: 50px;
+
+ul li a {
+    transition: all 0.5s;
+    display: block;
+    height: 50px;
+    line-height: 50px;
+    padding: 0 15px;
 }
+
+.search {
+    line-height: 50px;
+}
+
 /* 下拉菜单 */
-.navR{
+.navR {
 
 }
- .el-dropdown-link {
-    cursor: pointer;
-      color: #42b983;
-      line-height: 50px;
-      display: block;
-      height: 50px;
-      padding: 0 20px;
-      font-weight: 500;
-  }
-  .el-dropdown-link:hover{
-    background: lightcoral;
-  }
-  .dMenu{
-    width: 92px;
-    text-align: center;
-  }
 
-  .dMenu a{
+.el-dropdown-link {
+    cursor: pointer;
+    color: #42b983;
+    line-height: 50px;
+    display: block;
+    height: 50px;
+    padding: 0 20px;
+    font-weight: 500;
+}
+
+.el-dropdown-link:hover {
+    background: lightcoral;
+}
+
+.dMenu a {
     display: block;
     width: 100%;
 
-  }  
+}
 </style>

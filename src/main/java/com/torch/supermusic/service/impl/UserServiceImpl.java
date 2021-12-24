@@ -53,7 +53,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         System.out.println("loadUserByUsername::::" + username);
         //先在redis中查找
         User user = (User) redisUtil.get(username);
-        if (user==null){
+        if (user == null) {
             //如果没有就去数据库查找
             user = getOne(new QueryWrapper<User>().eq("username", username));
             if (user == null) {
@@ -68,17 +68,17 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
             List<Role> roles = roleService.listByIds(ids);
             user.setRoles(roles);
             //写入权限
-            List<GrantedAuthority> list=new ArrayList<>();
+            List<GrantedAuthority> list = new ArrayList<>();
             for (Role role : roles) {
                 list.add(new Authority(role.getName()));
             }
             user.setAuthorities(list);
             //保存到redis中
-            redisUtil.set(username,user,24*60*60);
+            redisUtil.set(username, user, 24 * 60 * 60);
         }
         System.out.println(user);
         for (GrantedAuthority authority : user.getAuthorities()) {
-            System.out.println("权限："+authority.getAuthority());
+            System.out.println("权限：" + authority.getAuthority());
         }
         return user;
     }
@@ -108,7 +108,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     public String register(Register register) {
         int code = (int) redisUtil.get(register.getEmail() + "code");
 //        判断验证码
-        if (register.getCode().equals(code+"")) {
+        if (register.getCode().equals(code + "")) {
 //            判断用户是否已存在
             if (count(new QueryWrapper<User>().eq("username", register.getUsername())) == 0) {
                 User user = new User();
@@ -131,20 +131,22 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
     @Override
     public boolean updateOne(User user) {
-        Boolean flag=true;
+        Boolean flag = true;
         try {
-            Map<String, Object> map = new HashMap<>();
-            map.put("user_id",user.getId());
-            userRoleService.removeByMap(map);
             updateById(user);
-            for (Role role : user.getRoles()) {
-                UserRole userRole = new UserRole();
-                userRole.setUserId(user.getId());
-                userRole.setRoleId(role.getId());
-                userRoleService.save(userRole);
+            if (user.getRoles() != null) {
+                Map<String, Object> map = new HashMap<>();
+                map.put("user_id", user.getId());
+                userRoleService.removeByMap(map);
+                for (Role role : user.getRoles()) {
+                    UserRole userRole = new UserRole();
+                    userRole.setUserId(user.getId());
+                    userRole.setRoleId(role.getId());
+                    userRoleService.save(userRole);
+                }
             }
         } catch (Exception e) {
-            flag=false;
+            flag = false;
             e.printStackTrace();
         } finally {
         }

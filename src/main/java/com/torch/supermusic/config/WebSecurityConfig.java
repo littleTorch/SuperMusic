@@ -83,7 +83,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 "/**/*.js",
                 "/**/*.xlsx",
                 "/swagger-resources/**",
-                "/home-slide/showImg");
+                "/home-slide/showImg",
+                "/user/showImg");
     }
 
     @Override
