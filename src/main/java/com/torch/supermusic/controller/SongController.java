@@ -102,8 +102,11 @@ public class SongController {
     @ApiOperation("查询歌手")
     @GetMapping("/singerByid/{id}")
     public ResultVo selectSingerId(@PathVariable("id") Long singerId){
-        System.out.println(singerId);
-        return ResultUtils.success("查询成功",songService.list(new QueryWrapper<Song>().eq("singer_id",singerId)));
+        List<Song> songs = songService.list(new QueryWrapper<Song>().eq("singer_id", singerId));
+        for (Song song : songs) {
+            song.setSinger(singerService.getById(song.getSingerId()));
+        }
+        return ResultUtils.success("查询成功", songs);
     }
 
 }

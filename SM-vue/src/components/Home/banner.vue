@@ -3,7 +3,7 @@
     
      <el-carousel indicator-position="outside">
     <el-carousel-item v-for="(item,index) in mybanners" :key="index">
-      <img :src="item" alt="">
+      <img :src="'http://sm2.v.frp.fit/home-slide/showImg?imgUrl='+item" alt="">
     </el-carousel-item>
   </el-carousel>
 
