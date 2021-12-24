@@ -3,21 +3,44 @@
     <div id="songSheet">
         <div id="songBox12">
             <div id="songH">
-                
                 <h3><i class="el-icon-headset"></i> 歌单</h3>
+                <!--搜素框-->
+                <div class="search">
+                    <el-form :model="select">
+                        <el-row>
+                            <el-col :span="5">
+                                <el-form-item label="歌单:" >
+                                    <el-input v-model="select.playlistName" placeholder="请输入内容"></el-input>
+                                </el-form-item>
+                            </el-col>
+                            <el-button
+                                    style="margin-left: 20px;"
+                                    class="btn-left"
+                                    size="mini"
+                                    type="primary"
+                                    icon="el-icon-search"
+                                    @click="sel(1)"
+                            >查询
+                            </el-button>
+                        </el-row>
+                    </el-form>
+                </div>
             </div>
-             <!-- <el-avatar v-for="item of songSheet" shape="square" :size="100" :src="item.icon" @click.native="profile(item)">
 
-        </el-avatar> -->
-
-        <a href="#" v-for="(item,index) of songSheet" :key="index" @click="profile(item)" class="songA">
-            <img :src="item.icon" alt="">
-            <p>{{item.playlistName}}</p>
-        </a>
-
+            <a href="#" v-for="(item,index) of songSheet" :key="index" @click="profile(item)" class="songA">
+                <img :src="item.icon" alt="">
+                <p>{{item.playlistName}}</p>
+            </a>
 
         </div>
-       
+        <!--分页箭头-->
+        <el-pagination
+                @size-change="handleSizeChange"
+                @current-change="handleCurrentChange"
+                :current-page="page.currentPage"
+                :page-size="page.pageSize"
+                layout="prev, pager, next"
+        ></el-pagination>
     </div>
 
 </template>
@@ -28,29 +51,61 @@ export default{
     data() {
         return {
             songSheet: [],
+
+            page: {
+                currentPage: 1, // 当前页
+                pageSize: 24, // 每页显示条目个数
+                totalCount: '' // 总条目数
+            },
+
+            select: {
+                playlistName: ''
+            },
         }
     },
     created() {
-        this.playlist();
+        // this.playlist();
+        this.sel(1)
     },
-    methods:{
-        playlist() {
-            this.axios.get("/playlist").then(
-                res =>{
-                    console.log(res);
-                    this.songSheet=res.data.data;
-                })
+    methods: {
+        // playlist(){
+        //     this.songSheet=[];
+        //     this.axios.get("/playlist").then(res => {
+        //         this.songSheet=res.data.data;
+        //     })
+        // },
+            sel(currentPage) {
+            this.songSheet=[];
+            this.axios.get("/playlist/page",{
+                params:{
+                    arg: this.select.playlistName,
+                    arg2: "1",
+                    pageSize: this.page.pageSize,
+                    currentPage: currentPage,
+                }
+            }).then(res => {
+                if (res.data.code == 200) {
+                    this.songSheet=res.data;
+                    this.songSheet = res.data.data.records;
+                    this.page.pageSize = res.data.data.size;
+                    this.page.currentPage = res.data.data.current;
+                } else {
+                    this.songSheet = '';
+                }
+            })
         },
         profile(id) {
             console.log(id);
-            this.$router.push({
-                path: '/SongSheet_profile',
-                query: {
-                    dataObj: id
-                }
-            })
-        }
-   }
+            this.$router.push({name: 'SongSheet_profile',params: {id: id}})
+        }, //pageSize改变调用
+        handleSizeChange(val) {
+            console.log(`每页 ${val} 条`);
+        },
+        // 页数改变调用
+        handleCurrentChange(val) {
+            this.sel(val)
+        },
+    }
 }
 </script>
 

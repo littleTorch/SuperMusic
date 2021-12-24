@@ -2,34 +2,53 @@
 <div class="singerMain">
   <div class="elCon">
     <el-container >
+
       <el-header>
         <h5>歌手</h5>
-        <div class="search">
 
-          <el-input
-                  placeholder="请输入歌手"
-                  prefix-icon="el-icon-search"
-                  v-model="input1">
-          </el-input>
+        <!--搜素框-->
+        <div class="search">
+          <el-form :model="select">
+            <el-row>
+              <el-col :span="5">
+                <el-form-item label="歌手:" >
+                  <el-input v-model="select.singerName" placeholder="请输入内容"></el-input>
+                </el-form-item>
+              </el-col>
+              <el-button
+                      style="margin-left: 20px;"
+                      class="btn-left"
+                      size="mini"
+                      type="primary"
+                      icon="el-icon-search"
+                      @click="singer(1)"
+              >查询
+              </el-button>
+            </el-row>
+          </el-form>
         </div>
+
       </el-header>
+
       <el-main class="singerBox">
+
         <div class="con">
           <div class="block" v-for="(item,index) of singerData" :key="index" @click="clickSinger(item)">
             <el-avatar shape="circle" :size="120"  :src="item.icon"></el-avatar>
             <p>{{item.singerName}}</p>
-            <!--          <a v-bind:href='axios.get("/singer")'>{{singerData}}</a>-->
           </div>
         </div>
+
       </el-main>
+
       <el-pagination
               @size-change="handleSizeChange"
               @current-change="handleCurrentChange"
               :current-page="page.currentPage"
               :page-size="page.pageSize"
-              :total="page.totalCount"
-              layout="total, prev, pager, next"
+              layout="prev, pager, next"
       ></el-pagination>
+
     </el-container>
   </div>
 
@@ -49,6 +68,9 @@
           pageSize: 32, // 每页显示条目个数
           totalCount: '' // 总条目数
         },
+        select: {
+          singerName: ''
+        },
       }
     },
     created() {
@@ -59,6 +81,8 @@
         this.singerData=[];
         this.axios.get("/singer/page",{
           params:{
+            arg: this.select.singerName,
+            arg2: "1",
             pageSize: this.page.pageSize,
             currentPage: currentPage,
           }
@@ -67,7 +91,6 @@
           this.singerData=res.data;
           if (res.data.code == 200) {
             this.singerData = res.data.data.records;
-            this.page.totalCount = res.data.data.total;
             this.page.pageSize = res.data.data.size;
             this.page.currentPage = res.data.data.current;
           } else {
@@ -171,5 +194,7 @@
   }
   .block img{
     margin: 0 auto;
+  }
+  .select{
   }
 </style>

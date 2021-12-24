@@ -110,7 +110,7 @@ const routes = [
     component: () => import('../views/other/SongSheet.vue'),
   },
   {
-    path: '/SongSheet_profile',
+    path: '/SongSheet_profile/:id',
     name: 'SongSheet_profile',
 
     component: () => import('../views/other/SongSheet_profile.vue'),
