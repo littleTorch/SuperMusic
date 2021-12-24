@@ -31,9 +31,9 @@ export default {
       //     disableOnInteraction: false
       // }
         }
-  
+
   },methods:{
-    
+
       getData(){
       this.$api.getChengpin6()
       .then(res =>{
@@ -47,7 +47,7 @@ export default {
         console.log('请求失败');
       })
     }
-  
+
   },
  created(){
    this.getData();
