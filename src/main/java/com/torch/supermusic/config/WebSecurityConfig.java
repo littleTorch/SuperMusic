@@ -116,6 +116,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/swagger/**",
                         "/druid/**",
                         "/login",
+                        "/user/getcode",
+                        "/user/register",
                         "/home-slide/showImg").permitAll()
                 //其他都需要权限
                 .anyRequest()
