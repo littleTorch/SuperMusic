@@ -53,10 +53,6 @@ import allsong from '../../components/Singer_profile/allsong.vue'
 
 <style >
 
-    .el-aside {
-      
-    
-    }
 
     .block2 {
        background: rgba(243, 243, 243, 0.5);

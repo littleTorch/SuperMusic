@@ -8,17 +8,16 @@
 
         <!--搜素框-->
         <div class="search">
-          <el-form :model="select">
+          <el-form :model="select" id="searchForm">
             <el-row>
-              <el-col :span="5">
-                <el-form-item label="歌手:" >
+              <el-col :span="100">
+                <el-form-item  id="singerSeacher" >
                   <el-input v-model="select.singerName" placeholder="请输入内容"></el-input>
                 </el-form-item>
               </el-col>
               <el-button
-                      style="margin-left: 20px;"
+                      style="margin-left: 10px;"
                       class="btn-left"
-                      size="mini"
                       type="primary"
                       icon="el-icon-search"
                       @click="singer(1)"
@@ -132,6 +131,7 @@
     display: flex;
     justify-content: center;
   }
+ 
   .elCon{
     width: 1200px;
     min-width:900px;
@@ -166,13 +166,21 @@
     height: 60px;
     overflow: hidden;
   }
+#searchForm{
+  width: 350px;
+  height: 60px;
+  float: left;
+}
+#singerSeacher{
+  padding-top: 10px;
+}
+
 
   .el-container {
     margin-bottom: 40px;
   }
 
-  .el-avatar{
-  }
+
   .el-pagination{
     text-align: center;
     padding: 40px 0 0 0;
@@ -195,6 +203,5 @@
   .block img{
     margin: 0 auto;
   }
-  .select{
-  }
+  
 </style>

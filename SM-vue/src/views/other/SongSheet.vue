@@ -2,20 +2,19 @@
     <div id="songSheet">
         <div id="songBox12">
             <div id="songH">
-                <h3><i class="el-icon-headset"></i> 歌单</h3>
+                <h3><i class="el-icon-headset iconSOng"></i> 歌单</h3>
                 <!--搜素框-->
-                <div class="search">
+                <div class="searchSong">
                     <el-form :model="select">
                         <el-row>
-                            <el-col :span="5">
-                                <el-form-item label="歌单:" >
+                            <el-col :span="100">
+                                <el-form-item  >
                                     <el-input v-model="select.playlistName" placeholder="请输入内容"></el-input>
                                 </el-form-item>
                             </el-col>
                             <el-button
-                                    style="margin-left: 20px;"
+                                    style="margin-left: 10px;"
                                     class="btn-left"
-                                    size="mini"
                                     type="primary"
                                     icon="el-icon-search"
                                     @click="sel(1)"
@@ -39,6 +38,7 @@
                 :current-page="page.currentPage"
                 :page-size="page.pageSize"
                 layout="prev, pager, next"
+                style="display:none"
         ></el-pagination>
 
     </div>
@@ -53,7 +53,7 @@ export default{
 
             page: {
                 currentPage: 1, // 当前页
-                pageSize: 24, // 每页显示条目个数
+                pageSize: 44, // 每页显示条目个数
                 totalCount: '' // 总条目数
             },
 
@@ -114,18 +114,25 @@ export default{
     justify-content: center;
 }
 #songH{
+    height: 60px;
     width: 900px;
     margin: 10px auto 20px;
     border-bottom: 3px solid red;
      
 }
 #songH h3{
-   font-size: 20px;
+   font-size: 25px;
+   float: left;
     margin: 10px auto;
 }
-#songH i{
-    font-size: 25px;
+.iconSOng{
+    line-height: 40px;
+    float: left;
+    font-size: 32px;
     font-weight: bold;
+}
+.searchSong{
+    float: right;
 }
 #songBox12{
     
