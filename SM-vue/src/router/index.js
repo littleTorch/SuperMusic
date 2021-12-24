@@ -81,6 +81,12 @@ const routes = [
     component: () => import('../views/NotFound'),
   },
   {
+    path: '/my',
+    name: 'my',
+
+    component: () => import('../views/My.vue'),
+  },
+  {
     path: '/mySongSheet',
     name: 'mySongSheet',
 

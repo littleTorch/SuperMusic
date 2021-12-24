@@ -1,5 +1,4 @@
 <template>
-
     <div id="songSheet">
         <div id="songBox12">
             <div id="songH">
@@ -41,8 +40,8 @@
                 layout="prev, pager, next"
                 style="display:none"
         ></el-pagination>
-    </div>
 
+    </div>
 </template>
 
 

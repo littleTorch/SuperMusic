@@ -3,7 +3,7 @@
 
 <div id="box">
 
-    <div class="row1">
+    <div>
     <router-link exact to="/mainL/login" >登录</router-link>
     <router-link to="/mainL/register">注册</router-link>
     </div>
@@ -59,9 +59,6 @@ export default {
     background: rgba(20, 77, 119, 0.4);
 
   }
-  .row1
-  {
-       
-  }
+
 
 </style>
