@@ -14,7 +14,7 @@
         <div id="SheetBoxB">
             <a href="#" v-for="(item,index) in song" :key="index" class="SheetBA">
                 <img :src="item.pictureUrl" alt="" class="SheetImg">
-                <p>P{{item.name}}</p>
+                <p>{{item.name}}</p>
                  <i class="el-icon-video-play"></i>
             </a>
 
