@@ -112,6 +112,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/swagger-ui/**",
                         "/getmusic",
                         "/updataSong",
+                        "/getSongList",
                         "/v3/**",
                         "/swagger/**",
                         "/druid/**",

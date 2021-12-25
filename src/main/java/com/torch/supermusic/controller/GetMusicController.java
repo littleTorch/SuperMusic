@@ -7,6 +7,7 @@ import com.torch.supermusic.service.IPlaylistService;
 import com.torch.supermusic.service.IPlaylistSongService;
 import com.torch.supermusic.service.ISingerService;
 import com.torch.supermusic.service.ISongService;
+import com.torch.supermusic.util.climbing.GetSongList;
 import com.torch.supermusic.util.climbing.UpdataSong;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -53,7 +54,28 @@ public class GetMusicController {
                 .addUrl("http://localhost:3000/toplist")
                 .addPipeline(new ConsolePipeline())
                 //开启5个线程抓取
-                .thread(20)
+                .thread(10)
+                //启动爬虫
+                .run();
+        clearSong();
+    }
+
+    @ApiOperation("更新歌单")
+    @GetMapping("/getSongList")
+    //会把全部删掉重新写入
+    public void getSongList(){
+        Request request = new Request("http://localhost:3000/login/cellphone");
+        request.setMethod(HttpConstant.Method.POST);
+        Map<String, Object> map = new HashMap<>();
+        map.put("phone","15815115306");
+        map.put("password","abc123456");
+        request.setRequestBody(HttpRequestBody.form(map,"utf-8"));
+        Spider.create(new GetSongList(playlistService,playlistSongService,songService,singerService))
+                .addRequest(request)
+                .addUrl("http://localhost:3000/top/playlist?limit=20")
+                .addPipeline(new ConsolePipeline())
+                //开启5个线程抓取
+                .thread(10)
                 //启动爬虫
                 .run();
         clearSong();

@@ -4,13 +4,7 @@ import cn.hutool.core.util.ReUtil;
 import cn.hutool.json.JSONUtil;
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.torch.supermusic.util.climbing.josnpojo.Artist;
-import com.torch.supermusic.util.climbing.josnpojo.MusicList;
-import com.torch.supermusic.util.climbing.josnpojo.MusicUrl;
-import com.torch.supermusic.util.climbing.josnpojo.PlayList;
-
 import com.torch.supermusic.entity.Playlist;
-
 import com.torch.supermusic.entity.PlaylistSong;
 import com.torch.supermusic.entity.Singer;
 import com.torch.supermusic.entity.Song;
@@ -18,16 +12,20 @@ import com.torch.supermusic.service.IPlaylistService;
 import com.torch.supermusic.service.IPlaylistSongService;
 import com.torch.supermusic.service.ISingerService;
 import com.torch.supermusic.service.ISongService;
-
+import com.torch.supermusic.util.climbing.josnpojo.Artist;
+import com.torch.supermusic.util.climbing.josnpojo.MusicList;
+import com.torch.supermusic.util.climbing.josnpojo.MusicUrl;
+import com.torch.supermusic.util.climbing.josnpojo.PlayList;
 import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.Site;
 import us.codecraft.webmagic.processor.PageProcessor;
 
-import java.util.*;
+import java.util.List;
 
-public class GetMusic implements PageProcessor {
+public class GetSongList implements PageProcessor {
 
-    public GetMusic(IPlaylistService playlistService, IPlaylistSongService playlistSongService, ISongService songService, ISingerService singerService) {
+
+    public GetSongList(IPlaylistService playlistService, IPlaylistSongService playlistSongService, ISongService songService, ISingerService singerService) {
         this.playlistService = playlistService;
         this.playlistSongService = playlistSongService;
         this.songService = songService;
@@ -50,9 +48,9 @@ public class GetMusic implements PageProcessor {
         String thisUrl = page.getRequest().getUrl();
         String thisId = ReUtil.get("\\d{1,15}$", thisUrl, 0);
         System.out.println(thisUrl);
-//        获取排行榜列表
-        if (thisUrl.contains("toplist")) {
-            List<String> alllist = page.getJson().jsonPath("$.list[*]").all();
+//        获取歌单列表
+        if (thisUrl.contains("top/playlist")) {
+            List<String> alllist = page.getJson().jsonPath("$.playlists[*]").all();
 //        取出需要的数据
             for (String s : alllist) {
                 PlayList parse = JSON.parseObject(s, PlayList.class);
@@ -64,7 +62,7 @@ public class GetMusic implements PageProcessor {
                 playlist.setPlaylistName(parse.getName());
                 playlist.setIcon(parse.getCoverImgUrl());
                 playlist.setPlaylistComment(parse.getDescription());
-                playlist.setPlaylistType(1);
+                playlist.setPlaylistType(0);
                 if (playlistService.count(new QueryWrapper<Playlist>().eq("id",playlist.getId()))==0){
                     playlistService.save(playlist);
                 }
@@ -74,8 +72,8 @@ public class GetMusic implements PageProcessor {
         if (thisUrl.contains("playlist/track/all")) {
             musicids = new StringBuilder();
             List<String> allmusic = page.getJson().jsonPath("$.songs[*]").all();
-            for (String s : allmusic) {
-                MusicList musicList = JSON.parseObject(s, MusicList.class);
+            for (int i=0;i<=50;i++) {
+                MusicList musicList = JSON.parseObject(allmusic.get(i), MusicList.class);
                 System.out.println(musicList);
                 musicids.append("," + musicList.getId());
                 //歌单歌曲表
@@ -107,7 +105,7 @@ public class GetMusic implements PageProcessor {
                 Song song = new Song();
                 song.setId(musicUrl.getId());
                 song.setSongUrl(musicUrl.getUrl());
-                if (song.getSongUrl()=="") {
+                if (song.getSongUrl().equals("")) {
                     songService.removeById(song.getId());
                     playlistSongService.remove(new QueryWrapper<PlaylistSong>().eq("id", song.getId()));
                 } else {
@@ -155,20 +153,4 @@ public class GetMusic implements PageProcessor {
         return site;
     }
 
-//    public static void main(String[] args) {
-////        Request request = new Request(URL+"login/cellphone");
-////        request.setMethod(HttpConstant.Method.POST);
-////        Map<String, Object> map = new HashMap<>();
-////        map.put("phone","15815115306");
-////        map.put("password","abc123456");
-////        request.setRequestBody(HttpRequestBody.form(map,"utf-8"));
-//        Spider.create(new GetMusic())
-////                .addRequest(request)
-//                .addUrl(URL+"toplist")
-//                .addPipeline(new ConsolePipeline())
-//                //开启1个线程抓取
-//                .thread(1)
-//                //启动爬虫
-//                .run();
-//    }
 }
