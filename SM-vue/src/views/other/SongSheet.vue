@@ -95,7 +95,8 @@ export default{
         },
         profile(id) {
             console.log(id);
-            this.$router.push({name: 'SongSheet_profile',params: {id: id}})
+            sessionStorage.setItem("songlist", JSON.stringify(id));
+            this.$router.push({name : 'SongSheet_profile'})
         }, //pageSize改变调用
         handleSizeChange(val) {
             console.log(`每页 ${val} 条`);

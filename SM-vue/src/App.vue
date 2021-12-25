@@ -39,6 +39,7 @@ export default {
     },
     methods: {
         addSong(song) {
+            console.log(song)
             this.isPlay = true;
             if (!this.findElem(this.songList,"id",song.id)){
                 this.songList.push({

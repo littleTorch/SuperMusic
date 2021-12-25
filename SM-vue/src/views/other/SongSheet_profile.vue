@@ -28,21 +28,21 @@
 
 <script>
     export default {
-        inject: ['addSong'],
         data() {
             return {
+                cur: 1000000000,
                 songSheet: [],
-                song: [],
-            cur: 1000000000,
+                song: []
             }
         },
+        inject: ['addSong'],
         created() {
             this.songsheetprofile();
             this.songsheetid()
         },
         methods: {
             songsheetprofile() {
-                this.songSheet=this.$route.params.id;
+                this.songSheet=JSON.parse(sessionStorage.getItem("songlist"));
                 //songSheet：歌单详情。包括id,封面，歌单简介，歌单创建者，歌单名字，歌单标签，歌单类型（0普通歌单，1排行榜，2我的歌单）
                 // console.log(this.songSheet)
             },
@@ -54,9 +54,7 @@
                         //sonng[]: 歌单中歌曲数据。包括歌曲简介，歌曲id，歌曲封面url，歌曲名字，歌曲地址
                         console.log(this.song)
                 })
-            },
-            play(item, index) {
-                console.log(item)
+            },play(item, index) {
                 this.cur=index;
                 console.log("点击播放歌曲")
                 this.addSong(item);
@@ -147,7 +145,7 @@
 .SheetBA p{
     margin-left: 15px;
     font-size: 18px;
-     width:580px;
+     /*width:580px;*/
     height: auto;
 white-space: nowrap;
 overflow: hidden;

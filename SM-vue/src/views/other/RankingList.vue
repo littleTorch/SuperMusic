@@ -46,13 +46,12 @@
                 <a  href="#" v-for="(item,index) in song" :key="index" class="RmainA">
                   <span> {{index+1}}</span> 
                     <p>{{item.name}}</p>
-                    <i class="el-icon-video-play"></i>
+                    <i class="el-icon-video-play" @click="play(item)"></i>
                 </a>
               </li>
           </ul>
 
         </div>
-
      <!-- <router-view/> -->
     </div>
     </el-col>
@@ -68,6 +67,7 @@ export default {
   components:{
       ListL
   },
+    inject: ['addSong'],
   data() {
     return {
       count: 0,
@@ -111,9 +111,10 @@ export default {
                     console.log(this.song)
                 })
 
-        }
-
-  
+        },play(item){
+          console.log("点击播放歌曲")
+          this.addSong(item);
+      }
   }
 };
 </script>
