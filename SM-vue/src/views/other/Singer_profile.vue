@@ -12,7 +12,7 @@
                     </div>
                 </el-aside>
                 <el-main>
-                    <allsong :songList="song"/>
+                    <allsong v-if="song" :songList="song"/>
                 </el-main>
             </el-container>
         </div>
@@ -38,8 +38,9 @@ import allsong from '../../components/Singer_profile/allsong.vue'
         },
         methods: {
             profile(){
-                this.singer=this.$route.query.dataObj;
-                // console.log(this.singer)
+                // this.singer=this.$route.query.dataObj;
+                this.singer=JSON.parse(sessionStorage.getItem("currentSingerId"))
+                console.log(this.singer)
             },
             singerId(){
                 this.axios.get("/song/singerByid/"+this.singer.id).then(res=>{

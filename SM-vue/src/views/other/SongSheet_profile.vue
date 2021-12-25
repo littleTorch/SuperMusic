@@ -15,7 +15,7 @@
             <a href="#" v-for="(item,index) in song" :key="index" class="SheetBA">
                 <img :src="item.pictureUrl" alt="" class="SheetImg">
                 <p>{{item.name}}</p>
-                 <i class="el-icon-video-play"></i>
+                <i :class="cur==index?'el-icon-video-pause':'el-icon-video-play'" @click="play(item,index)"></i>
             </a>
 
         </div>
@@ -28,10 +28,12 @@
 
 <script>
     export default {
+        inject: ['addSong'],
         data() {
             return {
                 songSheet: [],
-                song: []
+                song: [],
+            cur: 1000000000,
             }
         },
         created() {
@@ -52,6 +54,12 @@
                         //sonng[]: 歌单中歌曲数据。包括歌曲简介，歌曲id，歌曲封面url，歌曲名字，歌曲地址
                         console.log(this.song)
                 })
+            },
+            play(item, index) {
+                console.log(item)
+                this.cur=index;
+                console.log("点击播放歌曲")
+                this.addSong(item);
             }
 
         }

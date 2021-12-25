@@ -99,11 +99,12 @@
       },
       clickSinger(id){
         console.log(id)
+        sessionStorage.setItem("currentSingerId", JSON.stringify(id));
         this.$router.push({
           path: '/Singer_profile',
-          query: {
-            dataObj: id
-          }
+          // query: {
+          //   dataObj: id
+          // }
         });
       },
       //pageSize改变调用

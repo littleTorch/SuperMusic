@@ -4,7 +4,8 @@
         <HelloWorld/>
         <router-view></router-view>
         <div v-if="isPlay" id="footer">
-            <aplayer autoplay
+            <aplayer ref="player"
+                    autoplay
                      listMaxHeight="200px"
                      :music="songList[0]"
                      :list="songList"
