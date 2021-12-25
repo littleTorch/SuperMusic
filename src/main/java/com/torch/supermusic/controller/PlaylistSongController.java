@@ -52,7 +52,11 @@ public class PlaylistSongController {
         for (PlaylistSong playlistSong : list) {
             ids.add(playlistSong.getSongId());
         }
-        return ResultUtils.success("查询成功", songService.listByIds(ids));
+        List<Song> songs = songService.listByIds(ids);
+        for (Song song : songs) {
+            song.setSinger(singerService.getById(song.getSingerId()));
+        }
+        return ResultUtils.success("查询成功", songs);
     }
 
     @PreAuthorize("hasRole('NORMAL')")

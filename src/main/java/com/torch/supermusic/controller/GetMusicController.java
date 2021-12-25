@@ -12,6 +12,7 @@ import com.torch.supermusic.util.climbing.UpdataSong;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import us.codecraft.webmagic.Request;
@@ -100,6 +101,7 @@ public class GetMusicController {
                 .run();
     }
 
+    @Scheduled(cron = "0 */20 * * * ?")
     @ApiOperation("更新音乐路径")
     @GetMapping("/updataSong")
     public void getSongIds(){
@@ -117,7 +119,6 @@ public class GetMusicController {
         }
         musicids.deleteCharAt(0);
         updataSong("http://localhost:3000/song/url?id="+musicids);
-        clearSong();
     }
 
     private void clearSong(){
