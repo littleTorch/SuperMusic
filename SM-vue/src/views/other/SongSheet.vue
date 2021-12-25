@@ -78,7 +78,7 @@ export default{
             this.axios.get("/playlist/page",{
                 params:{
                     arg: this.select.playlistName,
-                    arg2: "1",
+                    arg2: "0",
                     pageSize: this.page.pageSize,
                     currentPage: currentPage,
                 }

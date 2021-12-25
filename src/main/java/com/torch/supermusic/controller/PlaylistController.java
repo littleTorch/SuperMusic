@@ -35,7 +35,7 @@ public class PlaylistController {
     @ApiOperation("查询全部歌单")
     @GetMapping("")
     public ResultVo getAll(){
-        return new ResultUtils().success("查询成功",playlistService.list());
+        return new ResultUtils().success("查询成功",playlistService.list(new QueryWrapper<Playlist>().eq("playlist_type",1)));
     }
 
     @PreAuthorize("hasRole('NORMAL')")

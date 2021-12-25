@@ -4,7 +4,7 @@
         <el-form :model="select" label-width="80px">
             <el-row>
                 <el-col :span="5">
-                    <el-form-item label="歌曲名:">
+                    <el-form-item label="歌手名:">
                         <el-input v-model="select.singerName" placeholder="请输入内容"></el-input>
                     </el-form-item>
                 </el-col>

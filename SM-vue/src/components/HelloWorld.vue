@@ -17,9 +17,6 @@
                         <router-link to="/Singer">歌手</router-link>
                     </li>
                     <li>
-                        <router-link to="/mySongSheet">我的歌单</router-link>
-                    </li>
-                    <li>
                         <router-link to="/RankingList">排行榜</router-link>
                     </li>
                     <li>

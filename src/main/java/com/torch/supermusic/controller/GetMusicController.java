@@ -73,7 +73,7 @@ public class GetMusicController {
                 .addUrl(ids)
                 .addPipeline(new ConsolePipeline())
                 //开启5个线程抓取
-                .thread(1)
+                .thread(10)
                 //启动爬虫
                 .run();
     }
