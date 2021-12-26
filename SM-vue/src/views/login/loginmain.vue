@@ -37,7 +37,7 @@
                     <!--button -->
                     <el-form-item class="btns">
                         <el-button type="primary" @click="onSubmit">登录</el-button>
-                        <el-button type="primary">找回密码</el-button>
+                        <!--<el-button type="primary">找回密码</el-button>-->
                     </el-form-item>
                 </el-form>
             </el-card>

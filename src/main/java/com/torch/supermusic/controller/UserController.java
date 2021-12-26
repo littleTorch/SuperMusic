@@ -109,7 +109,9 @@ public class UserController {
                 return ResultUtils.error("用户名已存在！");
             }
         }
-        redisUtil.del(user.getUsername());
+        if (redisUtil.hasKey(user.getUsername())){
+            redisUtil.del(user.getUsername());
+        }
         return userService.updateOne(user) ? ResultUtils.success("修改成功") : ResultUtils.error("修改失败");
     }
 
@@ -117,13 +119,14 @@ public class UserController {
     @ApiOperation("更新密码")
     @PutMapping("/updataPassword")
     public ResultVo updataPas(@RequestBody SelectAndPage selectAndPage) {
-        User user = new User();
-        user.setId(Integer.parseInt(selectAndPage.getArg()));
-        if (new BCryptPasswordEncoder().matches(user.getPassword(),userService.getById(selectAndPage.getArg()).getPassword())){
+        User user = userService.getById(selectAndPage.getArg());
+        if (new BCryptPasswordEncoder().matches(selectAndPage.getArg(),user.getPassword())){
             return ResultUtils.error("旧密码错误");
         }
         user.setPassword(new BCryptPasswordEncoder().encode(selectAndPage.getArg2()));
-        redisUtil.del(user.getUsername());
+        if (redisUtil.hasKey(user.getUsername())){
+            redisUtil.del(user.getUsername());
+        }
         return userService.updateOne(user) ? ResultUtils.success("修改成功") : ResultUtils.error("修改失败");
     }
 
