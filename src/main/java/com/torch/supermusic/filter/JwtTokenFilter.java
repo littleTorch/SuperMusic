@@ -27,7 +27,6 @@ import java.util.concurrent.TimeUnit;
 @Component
 public class JwtTokenFilter extends OncePerRequestFilter {
 
-    @Qualifier("userServiceImpl")
     @Autowired
     private UserServiceImpl userDetailsService;
 
