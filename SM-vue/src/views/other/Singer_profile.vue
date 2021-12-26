@@ -152,7 +152,7 @@ export default {
 }
 
 .songerBox p {
-    /*width: 580px;*/
+    width: 480px;
     height: auto;
     white-space: nowrap;
     overflow: hidden;

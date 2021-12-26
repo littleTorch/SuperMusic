@@ -237,6 +237,10 @@ text-overflow:ellipsis;
 }
 .RmainA p{
   float: left;
+   width:280px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 .RmainA i{
   float: right;

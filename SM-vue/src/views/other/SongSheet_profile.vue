@@ -145,11 +145,10 @@
 .SheetBA p{
     margin-left: 15px;
     font-size: 18px;
-     /*width:580px;*/
-    height: auto;
-white-space: nowrap;
-overflow: hidden;
-text-overflow: ellipsis;
+     width:380px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 .SheetBA i{
     float: right;
