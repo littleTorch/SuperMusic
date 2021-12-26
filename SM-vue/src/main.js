@@ -29,7 +29,6 @@ router.beforeEach((to, from, next) => {
   // from 将要离开的路由
   // next 让路由继续执行
   let token = sessionStorage.getItem("token");
-  console.log(token)
   if (to.path === '/mainL/login'||to.path === '/mainL/register') {
       next();
   }else if(!token){

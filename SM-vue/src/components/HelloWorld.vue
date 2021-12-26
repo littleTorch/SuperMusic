@@ -19,7 +19,7 @@
                     <li>
                         <router-link to="/RankingList">排行榜</router-link>
                     </li>
-                    <li>
+                    <li v-if="isAdmin">
                         <router-link to="/Admin">管理员</router-link>
                     </li>
 
@@ -59,7 +59,7 @@ export default {
     data() {
         return {
             input1: '',
-
+            isAdmin: sessionStorage.getItem('role'),
         }
     },
     props: {
@@ -67,12 +67,12 @@ export default {
     },
     methods: {
         handleCommand(command) {
-            sessionStorage.setItem("token","");
+            sessionStorage.clear();
             this.$router.push({path: "/mainL/login"})
         },
         toMy() {
             this.$router.push({path: "/my"})
-        }
+        },
     }
 }
 </script>

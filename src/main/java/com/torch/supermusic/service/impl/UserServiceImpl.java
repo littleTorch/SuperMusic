@@ -76,10 +76,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
             //保存到redis中
             redisUtil.set(username, user, 24 * 60 * 60);
         }
-        System.out.println(user);
-        for (GrantedAuthority authority : user.getAuthorities()) {
-            System.out.println("权限：" + authority.getAuthority());
-        }
         return user;
     }
 

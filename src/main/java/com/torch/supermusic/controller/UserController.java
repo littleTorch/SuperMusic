@@ -12,6 +12,7 @@ import com.torch.supermusic.service.IRoleService;
 import com.torch.supermusic.service.IUserRoleService;
 import com.torch.supermusic.service.IUserService;
 import com.torch.supermusic.util.JwtTokenUtil;
+import com.torch.supermusic.util.RedisUtil;
 import com.torch.supermusic.util.argEntity.Register;
 import com.torch.supermusic.util.argEntity.SelectAndPage;
 import com.torch.supermusic.util.result.ResultUtils;
@@ -59,6 +60,9 @@ public class UserController {
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
 
+    @Autowired
+    private RedisUtil redisUtil;
+
     private String IMG_PATH = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\userIcon";
 
 
@@ -105,6 +109,7 @@ public class UserController {
                 return ResultUtils.error("用户名已存在！");
             }
         }
+        redisUtil.del(user.getUsername());
         return userService.updateOne(user) ? ResultUtils.success("修改成功") : ResultUtils.error("修改失败");
     }
 
@@ -118,6 +123,7 @@ public class UserController {
             return ResultUtils.error("旧密码错误");
         }
         user.setPassword(new BCryptPasswordEncoder().encode(selectAndPage.getArg2()));
+        redisUtil.del(user.getUsername());
         return userService.updateOne(user) ? ResultUtils.success("修改成功") : ResultUtils.error("修改失败");
     }
 
@@ -138,6 +144,7 @@ public class UserController {
     @DeleteMapping(value = "/dels")
     public ResultVo delete(@RequestBody String[] ids) {
         for (String id : ids) {
+            redisUtil.del(userService.getById(id).getUsername());
             userRoleService.remove(new QueryWrapper<UserRole>().eq("user_id", id));
         }
         return userService.removeByIds(Arrays.asList(ids)) ? ResultUtils.success("删除成功") : ResultUtils.success("删除失败");

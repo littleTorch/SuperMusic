@@ -16,6 +16,7 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.HashMap;
 
 /**
  * 登录认证成功处理器
@@ -33,8 +34,11 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
         User user = (User) authentication.getPrincipal();
         //2.生成token
         String token = jwtUtils.generateToken(user);
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("roles",user.getAuthorities());
+        map.put("token",token);
 //          返回token
-        String res = JSONObject.toJSONString(ResultUtils.success("登录成功",token), SerializerFeature.DisableCircularReferenceDetect);
+        String res = JSONObject.toJSONString(ResultUtils.success("登录成功",map), SerializerFeature.DisableCircularReferenceDetect);
         httpServletResponse.setContentType("application/json;charset=UTF-8");
         ServletOutputStream out = httpServletResponse.getOutputStream();
         out.write(res.getBytes("UTF-8"));

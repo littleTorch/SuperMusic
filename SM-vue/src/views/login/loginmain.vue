@@ -49,6 +49,9 @@
 import SlideVerify from "./SliderVerify.vue"; //引入
 
 export default {
+    beforeDestroy(){
+        this.$router.go(0);
+    },
     data() {
         return {
             slide:false,
@@ -64,6 +67,7 @@ export default {
             },
         };
     },
+    // inject: ['checkAdmin'],
     components: {
         SlideVerify, //注册组件
     },
@@ -84,7 +88,13 @@ export default {
                     console.log(response);
                     if (response.data.code==200){
                         let res = response.data;
-                        sessionStorage.setItem("token", res.data);
+                        sessionStorage.setItem("token", res.data.token);
+                        res.data.roles.forEach(item=>{
+                            if (item.authority=="ROLE_ADMIN"){
+                                sessionStorage.setItem("role","ROLE_ADMIN");
+                            }
+                            // this.checkAdmin();
+                        })
                         this.$message.success(response.data.msg);
                         this.$router.push({path:"/"});
                     }else{
