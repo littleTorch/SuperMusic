@@ -47,8 +47,8 @@ public class GetMusicController {
         Request request = new Request("http://localhost:3000/login/cellphone");
         request.setMethod(HttpConstant.Method.POST);
         Map<String, Object> map = new HashMap<>();
-        map.put("phone","15815115306");
-        map.put("password","abc123456");
+        map.put("phone","手机号");
+        map.put("password","密码");
         request.setRequestBody(HttpRequestBody.form(map,"utf-8"));
         Spider.create(new GetMusic(playlistService,playlistSongService,songService,singerService))
                 .addRequest(request)
@@ -68,8 +68,8 @@ public class GetMusicController {
         Request request = new Request("http://localhost:3000/login/cellphone");
         request.setMethod(HttpConstant.Method.POST);
         Map<String, Object> map = new HashMap<>();
-        map.put("phone","15815115306");
-        map.put("password","abc123456");
+        map.put("phone","手机号");
+        map.put("password","密码");
         request.setRequestBody(HttpRequestBody.form(map,"utf-8"));
         Spider.create(new GetSongList(playlistService,playlistSongService,songService,singerService))
                 .addRequest(request)
