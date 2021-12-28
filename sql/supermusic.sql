@@ -189,13 +189,6 @@ CREATE TABLE `user` (
 -- Records of user
 -- ----------------------------
 INSERT INTO `user` VALUES ('1', 'root', '$2a$10$.jwFqtUznHiY4T0rk3r1WenLtDGVb1yx3w4CzSxBlNZ1cNNZkhUvi', '0', '10086', null, '管理员大大', '0', '');
-INSERT INTO `user` VALUES ('2', 'long', '$2a$10$Oin30UYgumzAewnnlDuYNeqd13yXnm2JFOluSQDR8RjPjWFjc97cC', null, null, null, null, '0', 'q1444504585@163.com');
-INSERT INTO `user` VALUES ('6', '111', '$2a$10$1voUE5iDWUrObO7YGEGz4erTWRf6CBVKQatuqHnPKkT8f7woWVZim', null, null, null, '测', '1', 'harry_coderush@163.com');
-INSERT INTO `user` VALUES ('8', 'torch', '$2a$10$vAdYsxc5gS96UKAOKqu3PuBRmNN9no5a0muVDjFFvK2xRoXqc0TNi', null, '', '', '炬个', '0', '');
-INSERT INTO `user` VALUES ('11', '213123', '$2a$10$8n4E3V.GUH19su3JSZu9tekLDQMjBPUIVpe38UmLV4HetCutITfu2', null, null, null, null, null, '2104835627@qq.com');
-INSERT INTO `user` VALUES ('12', '111111', '$2a$10$q1AgtFqGaGhWuQ2xGhsskOrvdQpDihBZkzMTc1QSxS3/Nb6QqdoQi', null, null, null, null, null, '2104835627@qq.com');
-INSERT INTO `user` VALUES ('13', '12345678', '$2a$10$HzCPYIhfQIIwdAizie.psuZml.OuzksUyOuUKzzfgDmER42qeAgRe', null, '123456', null, '你好', '0', '2104835627@qq.com');
-INSERT INTO `user` VALUES ('14', 'luo', '$2a$10$PZHvFs/KORlK54qEjj6.e.gLcEoPR27mSj7Sdvn9lmikdALZdZ1EW', null, null, null, null, null, '2509541571@qq.com');
 
 -- ----------------------------
 -- Table structure for `user_role`
@@ -213,10 +206,4 @@ CREATE TABLE `user_role` (
 -- ----------------------------
 INSERT INTO `user_role` VALUES ('1', '1', '1');
 INSERT INTO `user_role` VALUES ('2', '2', '1');
-INSERT INTO `user_role` VALUES ('16', '1', '2');
-INSERT INTO `user_role` VALUES ('17', '1', '6');
-INSERT INTO `user_role` VALUES ('19', '1', '11');
-INSERT INTO `user_role` VALUES ('20', '1', '12');
-INSERT INTO `user_role` VALUES ('26', '1', '8');
-INSERT INTO `user_role` VALUES ('27', '1', '13');
-INSERT INTO `user_role` VALUES ('28', '1', '14');
+
